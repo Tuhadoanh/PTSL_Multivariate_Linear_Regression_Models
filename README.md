@@ -9,7 +9,7 @@ The project focuses on:
 
 ---
 
-# 📂 Contents
+## 📂 Contents
 - Mathematical foundation of multivariate linear regression.
 - Implementation from scratch using Python (NumPy, Pandas).
 - Application on real-world datasets from Kaggle.
@@ -18,13 +18,13 @@ The project focuses on:
 
 ---
 
-# 📊 Dataset
+## 📊 Dataset
 - Main datasets are taken from [Kaggle](https://www.kaggle.com/).  
 - Example: [CẦN BỔ SUNG].
 
 ---
 
-# ⚙️ Installation & Usage
+## ⚙️ Installation & Usage
 1. Clone this repository:
    ```bash
    git clone https://github.com/Tuhadoanh/PTSL_Multivariate_Linear_Regression_Models.git
