@@ -1,0 +1,26 @@
+# ---- LaTeX ----
+# Các file trung gian
+*.aux
+*.log
+*.toc
+*.out
+*.nav
+*.snm
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.vrb
+
+# Các file PDF đã biên dịch
+# (Mỗi người nên tự build PDF trên máy của mình)
+*.pdf
+
+# ---- Hệ thống ----
+# macOS
+.DS_Store
+
+# ---- VS Code ----
+# Thư mục cài đặt riêng của VS Code
+.vscode/

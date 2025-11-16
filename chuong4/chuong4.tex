@@ -1,0 +1,806 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ĐÂY LÀ NỘI DUNG CHO FILE chuong4/chuong4.tex
+% Nội dung được bóc tách từ file bạn gửi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================================================
+\section{Xây dựng mô hình}
+\begin{frame}
+\frametitle{Xây dựng mô hình}
+Ở các mục trước, chúng ta đã tìm hiểu về mô hình hồi quy tuyến tính đơn giản và mô hình hồi quy tuyến tính bội. 
+
+Ở mục này, ta sẽ mở rộng mô hình bằng cách sử dụng nhiều hơn một biến phản hồi. 
+
+Xét một mô hình gồm $m$ biến phản hồi $Y_1, Y_2, \dots, Y_m$ và $r$ biến dự đoán $Z_1, Z_2, \dots, Z_r$.  
+Mỗi biến phản hồi $Y_j$ được giả thiết là một hàm tuyến tính của các biến dự đoán, ta viết:
+\[
+\begin{aligned}
+Y_1 &= \beta_{01} + \beta_{11}Z_1 + \cdots + \beta_{r1}Z_r + \varepsilon_1 \\
+Y_2 &= \beta_{02} + \beta_{12}Z_1 + \cdots + \beta_{r2}Z_r + \varepsilon_2 \\
+&\vdots \\
+Y_m &= \beta_{0m} + \beta_{1m}Z_1 + \cdots + \beta_{rm}Z_r + \varepsilon_m
+\end{aligned}
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ký hiệu vector và ma trận}
+Vector nhiễu $\boldsymbol{\varepsilon} = [\,\varepsilon_1 \ \varepsilon_2 \ \dots \ \varepsilon_m\,]'$ được giả sử tuân theo phân phối chuẩn m chiều với:
+\[
+E(\varepsilon) = 0, \quad Var(\varepsilon) = \Sigma
+\]
+trong đó $\Sigma$ là ma trận đối xứng xác định dương.
+
+Để tiếp cận với công thức của mô hình hồi quy tuyến tính đa bội, ta ký hiệu:
+\[
+Y_j = [y_{j1} \ y_{j2} \ \dots \ y_{jm}]', \quad
+Z_j = [z_{j0} \ z_{j1} \ \dots \ z_{jr}]', \quad
+\varepsilon_{j} = [\varepsilon_{j1} \ \varepsilon_{j2} \ \dots \ \varepsilon_{jm}]'
+\]
+lần lượt là giá trị thu thập được của các biến phản hồi, biến dự đoán và nhiễu tại quan sát thứ j.
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame} 
+\frametitle{Dạng ma trận của mô hình} 
+Để thuận tiện cho việc diễn đạt mô hình, các mô hình trên được viết lại dưới dạng ma trận. Khi đó ta có: 
+\[ [Y] = \begin{bmatrix} y_{11} & y_{12} & \cdots & y_{1m} \\ y_{21} & y_{22} & \cdots & y_{2m} \\ \vdots & \vdots & \ddots & \vdots \\ y_{n1} & y_{n2} & \cdots & y_{nm} \end{bmatrix}_{n \times m}, 
+\quad 
+[\beta] = \begin{bmatrix} \beta_{01} & \beta_{02} & \cdots & \beta_{0m}\\ \beta_{11} & \beta_{12} & \cdots & \beta_{1m}\\ \vdots & \vdots & \ddots & \vdots\\ \beta_{r1} & \beta_{r2} & \cdots & \beta_{rm} \end{bmatrix}_{(r+1)\times m} \] 
+
+\[ [\varepsilon] = \begin{bmatrix} \varepsilon_{11} & \varepsilon_{12} & \cdots & \varepsilon_{1m}\\ \varepsilon_{21} & \varepsilon_{22} & \cdots & \varepsilon_{2m}\\ \vdots & \vdots & \ddots & \vdots\\ \varepsilon_{n1} & \varepsilon_{n2} & \cdots & \varepsilon_{nm} \end{bmatrix}_{n \times m}, 
+\quad 
+Z = \begin{bmatrix} 1 & z_{11} & z_{12} & \cdots & z_{1r} \\ 1 & z_{21} & z_{22} & \cdots & z_{2r} \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & z_{n1} & z_{n2} & \cdots & z_{nr} \end{bmatrix}_{n \times (r+1)} \] 
+Từ các ma trận trên, mô hình hồi quy tuyến tính đa bội được viết gọn dưới dạng: 
+\[
+\begin{bmatrix}
+Y
+\end{bmatrix}_{n \times m}
+=
+Z_{n \times (r+1)}
+\begin{bmatrix}
+\beta
+\end{bmatrix}_{(r+1) \times m}
++
+\begin{bmatrix}
+\varepsilon
+\end{bmatrix}_{n \times m}
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Các giả thiết của mô hình}
+Các giả thiết của mô hình hồi quy tuyến tính đa biến:
+\begin{itemize}
+    \item $E(\boldsymbol{\varepsilon}_{(i)}) = 0$
+    \item $\mathrm{Cov}(\boldsymbol{\varepsilon}_{(i)}, \boldsymbol{\varepsilon}_{(j)}) = \sigma_{ij} I, \quad \forall i,j = 1,\dots,m$
+\end{itemize}
+Ma trận hiệp phương sai của $m$ giá trị nhiễu tại cùng một quan sát $j$:
+\[
+\mathrm{Var}(\boldsymbol{\varepsilon}_j) = 
+\boldsymbol{\Sigma} =
+\begin{bmatrix}
+\sigma_{11} & \sigma_{12} & \cdots & \sigma_{1m} \\
+\sigma_{21} & \sigma_{22} & \cdots & \sigma_{2m} \\
+\vdots & \vdots & \ddots & \vdots \\
+\sigma_{m1} & \sigma_{m2} & \cdots & \sigma_{mm}
+\end{bmatrix}, \quad \forall j = 1,\dots,n
+\]
+\textit{Như vậy, mô hình hồi quy tuyến tính đa bội là sự mở rộng tự nhiên của mô hình hồi quy tuyến tính bội, cho phép các biến phản hồi có thể tương quan với nhau.}
+\end{frame}
+
+%============================================================
+\section{Ước lượng các tham số}
+%------------------------------------------------------------
+\subsection{Ước lượng bình phương cực tiểu của \texorpdfstring{$[\beta]$}{[beta]}}
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ước lượng bình phương cực tiểu của $[\beta]$}
+Như đã đề cập ở phần trước, biến phản hồi thứ $j$ tuân theo mô hình hồi quy tuyến tính cổ điển:
+\[
+Y_{(j)} = Z\beta_{(j)} + \varepsilon_{(j)}
+\]
+Với mỗi mô hình như vậy, tổng bình phương nhiễu $RSS_j$ được cực tiểu hoá bởi:
+\[
+\widehat{\beta}_{(j)} = (Z'Z)^{-1}Z'Y_{(j)}
+\]
+Mặt khác, tổng bình phương nhiễu của toàn bộ mô hình hồi quy tuyến tính bội được cho bởi công thức:
+\[
+RSS([\beta]) = \sum_{j=1}^{n}RSS(\beta_{(j)}) 
+= \sum_{j=1}^{n}(Y_{(j)} - Z\beta_{(j)})'(Y_{(j)} - Z\beta_{(j)})
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ước lượng bình phương cực tiểu của $[\beta]$}
+Vì mỗi số hạng trong chuỗi tổng trên là không âm nên $RSS([\beta])$ của toàn bộ mô hình đạt cực tiểu khi từng $RSS(\beta_{(j)})$ đạt cực tiểu.  
+Do đó:
+\[
+[\widehat{\boldsymbol{\beta}}]
+=
+\left[
+\begin{array}{c: c: c: c}
+\widehat{\boldsymbol{\beta}}_{(1)} & 
+\widehat{\boldsymbol{\beta}}_{(2)} &
+\cdots &
+\widehat{\boldsymbol{\beta}}_{(m)}
+\end{array}
+\right]
+=
+(Z'Z)^{-1}Z'
+\left[
+\begin{array}{c: c: c: c}
+Y_{(1)} &
+Y_{(2)} &
+\cdots &
+Y_{(m)}
+\end{array}
+\right]
+\]
+\[
+\boxed{
+\widehat{[\beta]} = (Z'Z)^{-1}Z'[Y]
+}
+\]
+\begin{block}{Kết luận}
+$\widehat{[\beta]}$ là một \textbf{ước lượng bình phương cực tiểu} cho ma trận hệ số hồi quy $[\beta]$.
+\end{block}
+\end{frame}
+
+%------------------------------------------------------------
+\subsection{Ước lượng cho \texorpdfstring{$[Y]$, $[\varepsilon]$ và $\Sigma$}{[Y], [epsilon] và Σ}}
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ước lượng cho $[Y]$, $[\varepsilon]$ và $\Sigma$}
+Sử dụng ước lượng bình phương cực tiểu $\widehat{[\beta]}$, ta có thể xác định các ma trận ước lượng sau:
+\[
+\widehat{[Y]} = Z\widehat{[\beta]} 
+= Z(Z'Z)^{-1}Z'[Y]
+\]
+\[
+\widehat{[\varepsilon]} = [Y] - \widehat{[Y]} 
+= (I - Z(Z'Z)^{-1}Z')[Y]
+\]
+\begin{block}{Tính chất trực giao}
+\[
+Z'[\widehat{\varepsilon}] = Z'(I - Z(Z'Z)^{-1}Z')[Y] 
+= (Z' - Z'Z(Z'Z)^{-1}Z')[Y] = 0
+\]
+\[
+[\widehat{Y}]'[\widehat{\varepsilon}]
+= (Z[\widehat{\beta}])'[\widehat{\varepsilon}]
+= [\widehat{\beta}]'Z'[\widehat{\varepsilon}]
+= 0
+\]
+\end{block}
+Do đó mọi cột của $Z$ và $[\widehat{Y}]$ đều trực giao với mọi cột của $\widehat{[\varepsilon]}$.  
+
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Quan hệ giữa $[Y]'[Y]$, $\widehat{[Y]}'\widehat{[Y]}$ và $\widehat{[\varepsilon]}'\widehat{[\varepsilon]}$}
+Từ đẳng thức $[Y] = \widehat{[Y]} + \widehat{[\varepsilon]}$ và tính trực giao ở trên, ta có:
+\[
+[Y]'[Y] = \widehat{[Y]}'\widehat{[Y]} + \widehat{[\varepsilon]}'\widehat{[\varepsilon]}
+\]
+\begin{block}{Kết luận}
+\begin{center}
+Tích vô hướng của vector phản hồi 
+
+= Tích vô hướng của vector dự đoán + Tích vô hướng của vector nhiễu.
+\end{center}
+\end{block}
+Ta sẽ sử dụng kết quả này để ước lượng ma trận hiệp phương sai $\Sigma$.
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ước lượng hợp lý cực đại của $\Sigma$}
+
+\begin{block}{Định lý 1}
+Xét mô hình hồi quy tuyến tính bội:
+\[
+[Y] = Z[\beta] + [\varepsilon]
+\]
+với $\mathrm{rank}(Z)=r+1\le n-m$ và nhiễu $[\varepsilon]$ có phân phối chuẩn.  
+Khi đó:
+\[
+\boxed{
+\widehat{\Sigma} = \frac{1}{n}\widehat{[\varepsilon]}'\widehat{[\varepsilon]}
+= \frac{1}{n}([Y] - Z\widehat{[\beta]})'([Y] - Z\widehat{[\beta]})
+}
+\]
+là \textbf{ước lượng hợp lý cực đại} của ma trận hiệp phương sai $\Sigma$.
+\end{block}
+\textbf{Chứng minh.} Theo giả thiết, ta có $n$ quan sát và tại quan sát thứ $i$, vector nhiễu:
+\[
+\varepsilon_i = [\varepsilon_{i1} \ \varepsilon_{i2} \ \dots \ \varepsilon_{im}]
+\sim \mathcal{N}_m(0, \Sigma)
+\]
+với hàm mật độ xác suất đồng thời:
+{\tiny\[
+f(\varepsilon_i)
+= \frac{1}{\sqrt{(2\pi)^m \det \Sigma}}
+\exp\!\left(-\frac{1}{2}\varepsilon_i \Sigma^{-1} \varepsilon_i'\right)
+= \frac{1}{\sqrt{(2\pi)^m \det \Sigma}}
+\exp\!\left(-\frac{1}{2}(Y_i - Z\beta_i)\Sigma^{-1}(Y_i - Z\beta_i)'\right)
+\]}
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ước lượng hợp lý cực đại của $\Sigma$}
+Từ đó, hàm hợp lý cho toàn bộ $n$ quan sát là:
+{\scriptsize
+\[
+\mathcal{L}([\beta], \Sigma, [Y])
+= \prod_{i=1}^{n} f(\varepsilon_i)
+= \frac{1}{\sqrt{(2\pi)^{mn}(\det \Sigma)^{n}}}
+\exp\!\left(
+-\frac{1}{2}
+\sum_{i=1}^{n}
+(Y_i - Z\beta_i)\Sigma^{-1}(Y_i - Z\beta_i)'
+\right)
+\]}
+Đặt:
+\[
+Q = [q_{ij}]_{n\times n}
+:= [\widehat{\varepsilon}]'[\widehat{\varepsilon}]
+= ([Y] - Z[\widehat{\beta}])'([Y] - Z[\widehat{\beta}])
+, \quad
+q_{ij} = \sum_{k=1}^{n} (y_{ki} - \widehat{y}_{ki})(y_{kj} - \widehat{y}_{kj})
+\]
+Khi đó:
+\[
+\sum_{i=1}^{n} (Y_i - Z\beta_i)\Sigma^{-1}(Y_i - Z\beta_i)'
+= \sum_{i=1}^{n} \left( \sum_{j=1}^{m} \sum_{k=1}^{m}
+(y_{ij} - \widehat{y}_{ij})(\Sigma^{-1})_{jk}(y_{ik} - \widehat{y}_{ik}) \right)
+\]
+\[
+= \sum_{j=1}^{m} \sum_{k=1}^{m}\left(  (\Sigma^{-1})_{jk}
+\sum_{i=1}^{n} (y_{ij} - \widehat{y}_{ij})(y_{ik} - \widehat{y}_{ik}) \right)
+= \sum_{j=1}^{m} \sum_{k=1}^{m} (\Sigma^{-1})_{jk} q_{jk}
+= \mathrm{tr}(\Sigma^{-1} Q)
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ước lượng hợp lý cực đại của $\Sigma$}
+Như vậy hàm hợp lý có thể được viết lại thành:
+\[
+\boxed{
+\mathcal{L}([\beta],\Sigma,[Y]) =
+\frac{1}{\sqrt{(2\pi)^{mn}(\det\Sigma)^{n}}}
+\exp\!\left(-\frac{1}{2}\mathrm{tr}(\Sigma^{-1}Q)\right)
+}
+\]
+Lấy log của hàm hợp lý:
+\[
+\log\mathcal{L}([\beta],\Sigma,[Y]) 
+= -mn\log(2\pi) +n\log(\det\Sigma^{-1}) 
+- \frac{1}{2}\mathrm{tr}(\Sigma^{-1}Q)
+\]
+Để cực đại hoá theo $\Sigma$, ta giải điều kiện đạo hàm bằng 0:
+\[
+\frac{\partial\log\mathcal{L}}{\partial\Sigma^{-1}} 
+= \frac{n}{2}\Sigma - \frac{1}{2}Q = 0
+\Rightarrow
+\widehat{\Sigma} = \frac{Q}{n}
+\]
+\[
+\boxed{
+\widehat{\Sigma} = \frac{1}{n}([Y]-Z\widehat{[\beta]})'([Y]-Z\widehat{[\beta]})
+}
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Giá trị lớn nhất của hàm hợp lý}
+\begin{block}{Hệ quả 1}
+Giá trị lớn nhất của hàm hợp lý cực đại đạt tại $\widehat{[\beta]}$ và $\widehat{\Sigma}$ là:
+\[
+\mathcal{L}([\widehat{\beta}], \widehat{\Sigma}, [Y])
+= \frac{1}{\sqrt{(2\pi)^{mn} (\det \Sigma)^{n}}}
+\exp\!\left(-\frac{1}{2}\mathrm{tr}(\Sigma^{-1} Q)\right)
+\]
+\[
+= \frac{1}{\sqrt{(2\pi)^{mn} (\det \Sigma)^{n}}}
+\exp\!\left(-\frac{1}{2}\mathrm{tr}\!\left(n([\varepsilon]'[\varepsilon])^{-1}([\varepsilon]'[\varepsilon])\right)\right)
+\]
+\[
+= \frac{1}{\sqrt{(2\pi)^{mn} (\det \Sigma)^{n}}}
+\exp\!\left(-\frac{1}{2}\mathrm{tr}(nI)\right)
+\]
+\[
+= (\det \Sigma)^{-n/2}(2\pi e)^{-mn/2}
+\]
+\end{block}
+\textbf{Ghi chú:} Với ước lượng như trên, đại lượng $n\widehat{\Sigma}$ tuân theo phân phối $W_{p,\,n-r-1}(\Sigma)$ (phân phối Wishart).
+\end{frame}
+
+%============================================================
+\section{Các tính chất quan trọng}
+%============================================================
+\begin{frame}{Ước lượng không chệch của $[\beta]$}
+\begin{block}{Tính chất 1}
+\[
+\boxed{
+\widehat{[\beta]} \text{ là ước lượng không chệch của } [\beta]
+}
+\]
+\end{block}
+
+Để chứng minh tính chất này, ta cần chỉ ra rằng:
+\[
+E(\widehat{[\beta]}) = [\beta]
+\]
+Thật vậy:
+\[
+\begin{aligned}
+E(\widehat{[\beta]})
+&= E\big((Z'Z)^{-1}Z'[Y]\big) \\
+&= E\big((Z'Z)^{-1}Z'(Z[\beta] + [\varepsilon])\big) \\
+&= E\big((Z'Z)^{-1}Z'Z[\beta]\big) + E\big((Z'Z)^{-1}Z'[\varepsilon]\big) \\
+&= [\beta] + (Z'Z)^{-1}Z'E([\varepsilon]) \\
+&= [\beta] + (Z'Z)^{-1}Z' \times 0 \\
+&= [\beta]
+\end{aligned}
+\]
+\textbf{Vậy } $\widehat{[\beta]}$ là ước lượng không chệch của $[\beta]$.
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ước lượng hợp lý cực đại của $[\beta]$}
+\begin{block}{Tính chất 2}
+\[
+\boxed{
+\widehat{[\beta]} \text{ là ước lượng hợp lý cực đại của } [\beta]
+} \quad \textit{(khi nhiễu $[\varepsilon]$ có phân phối chuẩn)}
+\]
+\end{block}
+
+\textbf{Chứng minh.}  
+Giả sử $[\varepsilon]$ có phân phối chuẩn thì hàm hợp lý của $n$ quan sát là:
+{\scriptsize\[
+\mathcal{L}([\beta], \Sigma, [Y])
+= \prod_{i=1}^{n} f(\varepsilon_i)
+= \frac{1}{\sqrt{(2\pi)^{mn} (\det \Sigma)^{n}}}
+\exp\!\left(
+-\frac{1}{2} \sum_{i=1}^{n} (Y_i - Z\beta_i)\Sigma^{-1}(Y_i - Z\beta_i)'
+\right)
+\]}
+Đặt:
+\[
+S_i := (Y_i - Z\beta_i)\Sigma^{-1}(Y_i - Z\beta_i)'
+\]
+
+\[
+S := \sum_{i=1}^{n}(Y_i - Z\beta_i)\Sigma^{-1}(Y_i - Z\beta_i)'
+= \sum_{i=1}^{n} S_i
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ước lượng hợp lý cực đại của $[\beta]$}
+Cực đại hóa $\mathcal{L}$ tương đương với cực tiểu hóa $S$.  
+Lấy đạo hàm riêng:
+\[
+\frac{\partial S_i}{\partial [\beta]'}
+= (\Sigma^{-1} + (\Sigma^{-1})')(Y_i' - [\beta]'Z_i')(-Z_i)
+= -2\Sigma^{-1}(Y_i'Z_i - [\beta]'Z_i'Z_i)
+\]
+Xét đạo hàm bằng 0, lấy tổng từ $i=1$ đến $n$, ta được:
+\[
+\sum_{i=1}^{n}Y_i'Z_i = \sum_{i=1}^{n}[\beta]'(Z_i'Z_i)
+\Rightarrow [Y]'Z = [\beta]'(Z'Z)
+\]
+\[
+\boxed{\Rightarrow\widehat{[\beta]} = (Z'Z)^{-1}Z'[Y]}
+\]
+\textbf{Vậy } $\widehat{[\beta]}$ là ước lượng hợp lý cực đại của $[\beta]$.
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Kỳ vọng và hiệp phương sai}
+\begin{block}{Tính chất 3}
+\[
+E([\widehat{\varepsilon}]) = 0, 
+\quad
+Cov(\beta_{(i)}, \beta_{(j)}) = \sigma_{ij}(Z'Z)^{-1}
+\]
+\end{block}
+\textbf{Chứng minh.}
+\[
+E(\widehat{\varepsilon}_{(j)})
+= E(Y_{(j)} - Z\widehat{\beta}_{(j)})
+= E\big(Z(\beta_{(j)} - \widehat{\beta}_{(j)}) + \varepsilon_{(j)}\big)
+= 0
+\]
+Đặt $C = (Z'Z)^{-1}Z'$, ta có:
+\[
+\begin{aligned}
+\mathrm{Cov}(\widehat{\beta}_{(i)}, \widehat{\beta}_{(j)})
+&= \mathrm{Cov}(CY_{(i)}, CY_{(j)})
+= E\!\left(CY_{(i)} - E(CY_{(i)})\right)\!\left(CY_{(j)} - E(CY_{(j)})\right)' \\
+&= C\,E\!\left((Y_{(i)} - Z\beta_{(i)})(Y_{(j)} - Z\beta_{(j)})'\right)C'
+= C\,E(\varepsilon_{(i)}\varepsilon_{(j)}')\,C' \\
+&= C\,\mathrm{Cov}(\varepsilon_{(i)}, \varepsilon_{(j)})\,C' = (Z'Z)^{-1}Z'(\sigma_{ij}I)Z(Z'Z)^{-1} \\
+&= \sigma_{ij}(Z'Z)^{-1}
+\end{aligned}
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Phân phối của $\widehat{[\beta]}$}
+\begin{block}{Tính chất 4}
+\[
+\boxed{
+\widehat{[\beta]} \text{ có phân phối chuẩn.}
+}
+\]
+\end{block}
+\textbf{Chứng minh.}
+Với giả thiết $\varepsilon_{(i)} \sim \mathcal{N}_n(0, \sigma_{ii}I)$, ta có:
+\[
+Y_{(i)} \sim \mathcal{N}_n(Z\beta, \sigma_{ii}I)
+\Rightarrow 
+\widehat{\beta}_{(i)} = (Z'Z)^{-1}ZY_{(i)} 
+\sim \mathcal{N}_{r+1}\big(\beta_{(i)}, \sigma_{ii}(Z'Z)^{-1}\big)
+\]
+\textbf{Vậy } $\widehat{[\beta]}$ có phân phối chuẩn.
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Tính chệch của $\widehat{\Sigma}$}
+\begin{block}{Tính chất 5}
+\[
+\boxed{
+\widehat{\Sigma} \text{ là ước lượng chệch của } \Sigma
+}
+\]
+\end{block}
+\textbf{Chứng minh.}  
+Ta cần chứng minh rằng:
+\[
+E(\widehat{\varepsilon}_{(i)}'\widehat{\varepsilon}_{(j)}) = \sigma_{ij}(n - r - 1)
+\]
+Đặt:
+\[
+H := Z(Z'Z)^{-1}Z', \quad I - H \text{ là ma trận dự đoán phần dư.}
+\]
+\[
+E(\widehat{\varepsilon}_{(j)}'\widehat{\varepsilon}_{(k)}) 
+= E([Y_{(j)} - \widehat{Y}_{(j)}]'[Y_{(k)} - \widehat{Y}_{(k)}])
+= E([Y_{(j)}'(I-H)[Y_{(k)}])
+\]
+\[
+= E(\varepsilon_{(j)}'(I-H)\varepsilon_{(k)}))
+= \sigma_{jk}(n - r - 1)
+\]
+Suy ra:
+\[
+E(\widehat{\Sigma}) = \frac{n-r-1}{n}\Sigma
+\Rightarrow \widehat{\Sigma} \text{ là ước lượng chệch của } \Sigma.
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Ước lượng không chệch của $\Sigma$}
+\begin{block}{Hệ quả 2}
+\[
+\boxed{
+\widehat{\Sigma}^* = \frac{n}{n - r - 1}\widehat{\Sigma}
+= \frac{n}{n - r - 1}\widehat{[\varepsilon]}'\widehat{[\varepsilon]}
+}
+\]
+\textbf{là ước lượng không chệch của} $\Sigma$.
+\end{block}
+Khi đó:
+\[
+E(\widehat{\Sigma}^*) = \Sigma
+\]
+Như vậy, $\widehat{\Sigma}^*$ được dùng trong các kiểm định thống kê để đảm bảo tính không chệch.
+\end{frame}
+
+%============================================================
+\section{Kiểm định tỷ số hợp lý cho tham số hồi quy}
+%============================================================
+\subsection{Kiểm định tỷ số hợp lý cho tham số hồi quy}
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Kiểm định tỷ số hợp lý cho tham số hồi quy}
+Tương tự như mục 6, ta tiến hành kiểm định xem liệu các biến phản hồi có tuân theo quy luật tuyến tính với toàn bộ biến phụ thuộc hay không.
+
+Qua kiểm định, có thể \textbf{đơn giản hóa mô hình} mà không gây ra ảnh hưởng quá lớn tới độ hiệu quả.
+
+Xét mô hình hồi quy tuyến tính đa bội:
+\[
+[Y] = Z[\beta] + [\varepsilon], \quad \text{với } \mathrm{rank}(Z) = r + 1 \le n - m.
+\]
+Tách $Z$ và $[\beta]$ thành hai phần:
+\[
+[Y] = Z[\beta] + [\varepsilon]
+= \begin{bmatrix} Z_{(1)} & Z_{(2)} \end{bmatrix}
+\begin{bmatrix} [\beta]_{(1)} \\ [\beta]_{(2)} \end{bmatrix} + [\varepsilon]
+\]
+Xét cặp giả thuyết và đối thuyết:
+\[
+\boxed{
+H_0 : [\beta]_{(2)} = 0
+\quad \text{và} \quad
+H_1 : [\beta]_{(2)} \neq 0
+}
+\]
+Dưới $H_0$, mô hình rút gọn trở thành:
+\[
+Y = Z_{(1)}[\beta]_{(1)} + [\varepsilon]_{(1)}
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Kiểm định tỷ số hợp lý cho tham số hồi quy}
+Độ lệch giữa các giá trị sai số trung bình bình phương hai mô hình được thể hiện qua:
+\[
+(\widehat{Y}_{(1)} - Z_{(1)}\widehat{[\beta]}_{(1)})'(\widehat{Y}_{(1)} - Z_{(1)}\widehat{[\beta]}_{(1)})
+- (\widehat{Y} - Z\widehat{[\beta]})'(\widehat{Y} - Z\widehat{[\beta]})
+= n(\widehat{\Sigma}_1 - \widehat{\Sigma})
+\]
+trong đó:
+\[
+\widehat{[\beta]}_{(1)} = (Z_{(1)}'Z_{(1)})^{-1}Z_{(1)}'[Y], 
+\qquad 
+\widehat{\Sigma}_1 = \frac{1}{n}(\widehat{Y}_{(1)} - Z_{(1)}\widehat{[\beta]}_{(1)})'(\widehat{Y}_{(1)} - Z_{(1)}\widehat{[\beta]}_{(1)})
+\]
+Xét tỷ số kiểm định $\Lambda$ được định nghĩa bởi:
+\[
+\Lambda = 
+\frac{\max_{[\beta]_{(1)}, \Sigma} \mathcal{L}([\beta]_{(1)}, \Sigma)}
+{\max_{[\beta], \Sigma} \mathcal{L}([\beta], \Sigma)}
+= \frac{\mathcal{L}(\widehat{[\beta]}_{(1)}, \widehat{\Sigma}_1)}{\mathcal{L}(\widehat{[\beta]}, \widehat{\Sigma})}
+= \left(\frac{\det \widehat{\Sigma}}{\det \widehat{\Sigma}_1}\right)^{n/2}
+\]
+Khi đó, thống kê \textbf{Wilks' Lambda} được xác định bởi:
+\[
+\boxed{
+\Lambda^{2/n} = \frac{\det \widehat{\Sigma}}{\det \widehat{\Sigma}_1}
+}
+\]
+và được sử dụng làm cơ sở cho các kiểm định tham số hồi quy.
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Kiểm định tỷ số hợp lý}
+\begin{block}{Định lý 2}
+Xét mô hình hồi quy tuyến tính đa bội:
+\[
+[Y] = Z[\beta] + [\varepsilon]
+\]
+với $\mathrm{rank}(Z) = r + 1 \le n - m$ và nhiễu $[\varepsilon]$ có phân phối chuẩn.
+
+Khi đó ta bác bỏ $H_0: [\beta]_{(2)} = 0$ nếu như đại lượng:
+\[
+-2\ln\Lambda = -n\ln\frac{\det \widehat{\Sigma}}{\det \widehat{\Sigma}_1}
+\]
+nhận giá trị đủ lớn.
+
+Với mẫu $n$ lớn, ta dùng thống kê hiệu chỉnh:
+\[
+T = -\left(n - r - 1 - \frac{1}{2}(m - r + q - 1)\right)
+\ln\frac{\det \widehat{\Sigma}}{\det \widehat{\Sigma}_1}
+\sim \chi^2_{m(r-q)}
+\]
+\end{block}
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Kiểm định tỷ số hợp lý}
+\textbf{Chứng minh. }Nếu $\mathrm{rank}(Z) = r^* + 1 < r + 1$, khi đó $Z'Z$ là ma trận suy biến nên không tồn tại nghịch đảo. Khi đó ta thay $(Z'Z)^{-1}$ bằng $(Z'Z)^+$ – 
+nghịch đảo giả Moore–Penrose.
+
+Tổng quát hơn, ta xét cặp giả thuyết và đối thuyết:
+\[
+H_0 : C[\beta]_{(2)} = C_0, 
+\quad 
+H_1 : C[\beta]_{(2)} \neq C_0
+\]
+trong đó $C$ là ma trận đầy hạng có kích thước $(r - q) \times (r + 1)$.
+Nếu chọn $C = [\,0 \;\; I_{r - q}\,]$ và $C_0 = 0$ thì ta quay lại bài toán kiểm định ban đầu.
+Khi $H_0$ đúng thì thống kê kiểm định tương ứng:
+
+\[
+n(\widehat{\Sigma}_1 - \widehat{\Sigma})
+= (C\widehat{\beta} - C_0)'(C(Z'Z)^{-1}C')^{-1}(C\widehat{\beta} - C_0)
+\sim W_{r - q}(\Sigma)
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\subsection{Một số phương pháp kiểm định khác}
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Một số phương pháp kiểm định khác}
+Ngoài tỷ số hợp lý (Likelihood Ratio), còn có các phép thử khác như:
+\[
+E = n\Sigma, \qquad
+H = n(\widehat{\Sigma}_1 - \widehat{\Sigma})
+\]
+Khi đó, các kiểm định dựa trên ma trận $HE^{-1}$.
+
+Tìm các trị riêng $\eta_1 \ge \eta_2 \ge \dots \ge \eta_s$ của $HE^{-1}$  
+(với $s = \min\{p, r - q\}$), nghiệm của phương trình:
+\[
+\det(\widehat{\Sigma}_1 - (\eta + 1)\widehat{\Sigma}) = 0
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Một số phương pháp kiểm định khác}
+
+Từ các trị riêng $\eta_i$, ta có bốn thống kê quan trọng:
+\[
+\text{Wilks’ Lambda: } 
+\Lambda = \prod_{i=1}^{s}\frac{1}{1 + \eta_i} = \frac{\det E}{\det(E + H)}
+\]
+\[
+\text{Pillai’s Trace: } V = \sum_{i=1}^{s}\frac{\eta_i}{1 + \eta_i} = \mathrm{tr}[(H + E)^{-1}H]
+\]
+\[
+\text{Hotelling–Lawley Trace: } U = \sum_{i=1}^{s}\eta_i = \mathrm{tr}(HE^{-1})
+\]
+\[
+\text{Roy’s Greatest Root: } \Theta = \frac{\eta_1}{1 + \eta_1}
+\]
+\textbf{Nhận xét:}  
+Phép thử của Roy thường cho kết quả mạnh nhất nếu chỉ có một trị riêng trội,  
+trong khi Wilks, Pillai và Hotelling phù hợp hơn khi có nhiều trị riêng lớn.
+\end{frame}
+
+%============================================================
+
+%============================================================
+\section{Dự báo từ mô hình hồi quy tuyến tính đa bội}
+%============================================================
+
+\begin{frame}
+\frametitle{Dự báo từ mô hình hồi quy tuyến tính đa bội}
+
+Xét mô hình:
+\[
+[Y] = Z[\beta] + [\varepsilon], \quad \mathrm{rank}(Z) = r + 1 \le n - m
+\]
+với $[\varepsilon]$ có phân phối chuẩn.
+
+Các tham số đã được ước lượng → có thể dùng để \textbf{dự báo} dữ liệu mới.
+
+\begin{itemize}
+    \item Mục tiêu: dự đoán trung bình của biến phản hồi tại điểm quan sát mới $z_0$.
+    \item Ta thu được $\widehat{\beta}'z_0$ – trung bình dự báo.
+\end{itemize}
+
+Theo giả thiết:
+\[
+\widehat{\beta}'z_0 \sim \mathcal{N}_m(\beta' z_0, z_0'(Z'Z)^{-1}z_0\,\Sigma)
+\]
+và
+\[
+n\widehat{\Sigma} \sim W_{n - r - 1}(\Sigma)
+\]
+Giá trị cần tìm của hàm hồi quy là $\beta' z_0$.  
+Thống kê kiểm định:
+\[
+T^2 = 
+\left( 
+\frac{\widehat{\beta}'z_0 - \beta' z_0}
+{\sqrt{z_0'(Z'Z)^{-1}z_0}}
+\right)'
+\left(
+\frac{n}{n - r - 1}\widehat{\Sigma}
+\right)^{-1}
+\left(
+\frac{\widehat{\beta}'z_0 - \beta' z_0}
+{\sqrt{z_0'(Z'Z)^{-1}z_0}}
+\right)
+\]
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Dự báo từ mô hình hồi quy tuyến tính đa bội}
+Miền ellipsoid tin cậy $100(1-\alpha)\%$ cho $\beta' z_0$ được xác định bởi:
+{\scriptsize\[
+(\widehat{\beta}'z_0 - \beta' z_0)' 
+\left(\frac{n}{n - r - 1}\widehat{\Sigma}\right)^{-1}
+(\widehat{\beta}'z_0 - \beta' z_0)
+\le
+z_0'(Z'Z)^{-1}z_0
+\frac{m(n - r - 1)}{n - r - m}
+F_{m, n - r - m}(\alpha)
+\]}
+Từ kết quả trên, ta có khoảng tin cậy đồng thời $100(1 - \alpha)\%$ cho:
+\[
+E(Y_i | Z = z_0) = z_0'\beta_{(i)}
+\]
+\[
+z_0\widehat{\beta}_{(i)} \pm
+\sqrt{\frac{m(n - r - 1)}{n - r - m}
+F_{m, n - r - m}(\alpha)
+z_0'(Z'Z)^{-1}z_0\,\widehat{\sigma}_{ii}}
+\]
+với $\widehat{\sigma}_{ii}$ là phần tử đường chéo của $\widehat{\Sigma}$.
+
+Khoảng tin cậy này thể hiện độ chắc chắn của giá trị trung bình dự báo.
+
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Dự báo từ mô hình hồi quy tuyến tính đa bội}
+
+Từ kết quả trên, ta có khoảng tin cậy đồng thời $100(1 - \alpha)\%$ cho:
+\[
+E(Y_i | Z = z_0) = z_0'\beta_{(i)}
+\]
+\[
+z_0\widehat{\beta}_{(i)} \pm
+\sqrt{\frac{m(n - r - 1)}{n - r - m}
+F_{m, n - r - m}(\alpha)
+z_0'(Z'Z)^{-1}z_0\,\widehat{\sigma}_{ii}}
+\]
+với $\widehat{\sigma}_{ii}$ là phần tử đường chéo của $\widehat{\Sigma}$.
+
+Khoảng tin cậy này thể hiện độ chắc chắn của giá trị trung bình dự báo.
+
+Với $Y_0 = \beta' z_0 + e_0$ và $e_0$ độc lập với $[e]$, ta có:
+\[
+Y_0 - \widehat{\beta}'z_0 \sim N_m(0, (1 + z_0'(Z'Z)^{-1}z_0)\Sigma)
+\]
+Do đó, miền ellipsoid dự báo với độ tin cậy $100(1 - \alpha)\%$ là:
+{\tiny\[
+(\widehat{\beta}'z_0 - \beta' z_0)' 
+\left(\frac{n}{n - r - 1}\widehat{\Sigma}\right)^{-1}
+(\widehat{\beta}'z_0 - \beta' z_0)
+\le
+(1 + z_0'(Z'Z)^{-1}z_0)
+\frac{m(n - r - 1)}{n - r - m}
+F_{m, n - r - m}(\alpha)
+\]}
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Khoảng dự báo cho từng biến phản hồi}
+
+Khoảng dự báo đồng thời $100(1 - \alpha)\%$ cho từng biến phản hồi $Y_{0(i)}$ là:
+\[
+z_0\widehat{\beta}_{(i)} \pm
+\sqrt{\frac{m(n - r - 1)}{n - r - m}
+F_{m, n - r - m}(\alpha)
+(1 + z_0'(Z'Z)^{-1}z_0)
+\frac{n}{n - r - 1}
+\widehat{\sigma}_{ii}}
+\]
+
+\textbf{So sánh:}  
+Khoảng dự báo này rộng hơn khoảng tin cậy, do bao gồm cả sai số ngẫu nhiên $e_0$.
+\begin{center}
+% \includegraphics[width=0.35\linewidth, keepaspectratio]{ellipse-example.png}
+% Ghi chú: File ellipse-example.png cần được đặt trong thư mục images/
+\includegraphics[width=0.35\linewidth, keepaspectratio]{images/ellipse-example.png}
+\end{center}
+\end{frame}

@@ -1,0 +1,786 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ĐÂY LÀ NỘI DUNG CHO FILE chuong5/chuong5.tex
+% Đã gộp 'phan1_chuong5.tex' và 'phan2_chuong5.tex'
+% Đã XÓA SẠCH các thẻ gây lỗi.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%============================================================
+% NỘI DUNG TỪ PHAN1_CHUONG5.TEX
+%============================================================
+\section{Sơ lược về cách tiếp cận mới}
+%============================================================
+
+\begin{frame}
+    \frametitle{Sơ lược về cách tiếp cận mới}
+    \begin{footnotesize}
+         Trong mục này, ta xét môt cách tiếp cận khác.
+         Ta coi biến Y, Z$_1, \ldots$, Z$_r$ là các biến ngẫu nhiên có hàm phân phối đồng thời không nhất thiết là phân phối chuẩn, có kỳ vọng và phương sai là
+
+     \begin{footnotesize}
+        \[
+        \boldsymbol{\mu} = \begin{bmatrix} \mu_y \\ _\text{- - - - -} \\ \boldsymbol{\mu_Z} \\_{r \times 1}\end{bmatrix}
+        \quad
+        \text{và} \quad \boldsymbol{S}=\left[\begin{array}{c:c}
+        \sigma_{Y Y} & \underset{1 \times r}{\boldsymbol{\sigma}_{\mathbf{Z Y}}^{\prime}} \\
+        \hdashline \underset{r \times 1}{\boldsymbol{\sigma}_{\mathbf{Z Y}}} & \underset{r \times r}{\boldsymbol{\Sigma}_{\mathbf{Z Z}}} 
+        \end{array}\right] \]
+    trong đó:
+        \[
+        \boldsymbol{\sigma_{ZY}} = [\sigma_{Z_1 Y}, \sigma_{Z_2 Y}, \dots ,  \sigma_{Z_r Y}]'
+        \]
+    \end{footnotesize}
+
+        và ma trận $\boldsymbol{\Sigma_{ZZ}}$ đầy hạng.
+        Trong trường hợp ma trận $\boldsymbol{\Sigma_{ZZ}}$ không đầy hạng, khi đó sẽ có một biến Z$_i$ là tổ hợp tuyến tính của các biến Z$_j$ (j $\neq$ i) còn lại .
+        Như vậy vector biến ngẫu nhiên $Z$ có thể được thay thế bằng một vector "con" mà các biến Z$_i$ là độc lập với nhau và ma trận $\boldsymbol{\Sigma_{ZZ}}$ mới sẽ đầy hạng và cùng hạng với ma trận cũ.
+        Trong cách tiếp cận này, để thuận tiện thì ta sẽ viết mô hình hồi quy dưới dạng
+
+        \[
+        Y = \beta_0 + \beta_1 Z_1 + \cdots + \beta_r Z_r + \varepsilon = \beta_0 + \boldsymbol{\beta'Z} + \varepsilon
+        \]
+
+        trong đó
+
+        \[
+        \boldsymbol{\beta} = [\beta_1, \beta_2, \ldots, \beta_p]'
+        \]
+     \end{footnotesize}
+\end{frame}
+%-------------------------------------------------------
+\begin{frame}
+\frametitle{Sơ lược về cách tiếp cận mới}
+
+Xét một biến dự đoán tuyến tính $\widehat Y$ của $Y$, có dạng:
+\begin{footnotesize}
+        \[
+        \widehat{Y} = \beta_0 + \boldsymbol{\beta' Z}
+        \]
+    \end{footnotesize}
+với sai số sẽ là
+\[
+\widehat{\varepsilon} = Y - \widehat Y = Y - \beta_0 - \boldsymbol{\beta' Z}
+\]
+
+Điểm khác biệt tiếp theo của cách tiếp cận này đó là ta sẽ không giả thiết rằng $E(\varepsilon) = 0$.
+Thay vào đó ta
+sẽ đi tìm các giá trị $\widehat{\beta_0}$ và $\widehat{\beta}$ sao cho giá trị trung bình bình phương của sai số khi ước lượng là nhỏ nhất, hay:
+\begin{footnotesize}
+        \[
+        (\hat{\beta}_0, \boldsymbol{\widehat{\beta}})= arg\min_{(\beta_0, \beta)} E (Y - \beta_0 - \boldsymbol{\beta' Z})^2
+        \]
+    \end{footnotesize}
+
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{ Sơ lược về cách tiếp cận mới}
+\begin{footnotesize}
+    \begin{block}{Định lý 8.1}
+    Biểu thức \(E(Y - \beta_0 -  \boldsymbol{\beta' Z})^2\) sẽ đạt giá trị nhỏ nhất tại
+
+        \[
+        \hat{\beta}_0 = \mu_Y - \boldsymbol{\sigma_{ZY}'\Sigma_{ZZ}^{-1} \mu_Z} , \quad \text{và} \boldsymbol{\quad \hat{\beta} = \Sigma_{ZZ}^{-1} \sigma_{ZY}}
+        \]
+
+        Hơn nữa, với \(\hat{\beta}_0\) và \(\hat{\beta}\) như trên thì \(\hat{\beta}_0 + \boldsymbol{\hat{\beta}' Z}\) là biến ngẫu nhiên có tương quan chặt nhất với $Y$ trong các biến ngẫu nhiên có dạng   \(\beta_0 + \boldsymbol{\beta' Z}\).
+    \end{block}
+        \textbf{Chứng minh:} Biến đổi
+
+        \[
+        (Y - \beta_0 - \boldsymbol{\beta' Z})^2 = ((Y - \mu_Y) - (\boldsymbol{\beta' Z} - \boldsymbol{\beta'\mu_Z} ) + (\mu_Y - \beta_0 - \boldsymbol{\beta'\mu_Z}))^2
+        \]
+
+        \[
+        = (Y - \mu_Y)^2 + (\boldsymbol{\beta' Z} - \boldsymbol{\beta'\mu_Z})^2 + (\mu_Y - \beta_0 - \boldsymbol{\beta'\mu_Z})^2 - 2(Y - \mu_Y)\boldsymbol{\beta'( Z - \mu_Z) +}
+        \]
+
+        \[
+        + 2((Y - \mu_Y)-\boldsymbol{\beta'( Z - \mu_Z)})(\mu_Y - \beta_0 - \boldsymbol{\beta'\mu_Z})
+        \]
+
+        
+    \end{footnotesize}
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Chứng minh định lý 8.1}
+\textbf{Chú ý rằng}
+\[
+        E(Y - \mu_Y) = 0, \quad \boldsymbol{E(Z - \mu_Z) = 0}
+\]
+\[
+        E(Y - \mu_Y)^2 = \sigma_{YY}, \quad E\boldsymbol{(\beta' Z - \beta' \mu_Z)^2} = \boldsymbol{\beta' \Sigma_{ZZ} \beta}, \quad E(Y - \mu_Y)\boldsymbol{\beta' (Z - \mu_Z)} = \boldsymbol{\beta' \sigma_{ZY}}
+\]
+
+        \textbf{Khi đó}
+\[
+\begin{aligned}
+E(Y - \beta_0 - \mathbf{\beta}' \mathbf{Z})^2 
+&= \sigma_{YY} + \mathbf{\beta}' \boldsymbol{\Sigma}_{ZZ} \mathbf{\beta} 
++ (\mu_Y - \beta_0 - \mathbf{\beta}' \boldsymbol{\mu}_Z)^2 
+- 2 \mathbf{\beta}' \boldsymbol{\sigma}_{ZY} \\[6pt]
+&= \sigma_{YY} - \boldsymbol{\sigma}_{ZY}' 
+\boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\sigma}_{ZY} 
++ (\mu_Y - \beta_0 - \mathbf{\beta}' \boldsymbol{\mu}_Z)^2 \\ 
+&\quad + \left(\boldsymbol{\sigma}_{ZY}' \boldsymbol{\Sigma}_{ZZ}^{-1} 
+\boldsymbol{\sigma}_{ZY} + \mathbf{\beta}' \boldsymbol{\Sigma}_{ZZ} \mathbf{\beta} 
+- 2 \mathbf{\beta}' \boldsymbol{\sigma}_{ZY}\right) \\[6pt]
+&= \sigma_{YY} - \boldsymbol{\sigma}_{ZY}' 
+\boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\sigma}_{ZY} 
++ (\mu_Y - \beta_0 - \mathbf{\beta}' \boldsymbol{\mu}_Z)^2 
+\\
+&\quad + (\mathbf{\beta} - \boldsymbol{\Sigma}_{ZZ}^{-1} 
+\boldsymbol{\sigma}_{ZY})' \boldsymbol{\Sigma}_{ZZ} 
+(\mathbf{\beta} - \boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\sigma}_{ZY}) \\[6pt]
+&\geq \sigma_{YY} - \boldsymbol{\sigma}_{ZY}' 
+\boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\sigma}_{ZY}
+\end{aligned}
+\]
+
+
+        \textbf{Như vậy} \(E(Y - \beta_0 - \beta' Z)^2_{\min} = \sigma_{YY} - \sigma'_{ZY} \Sigma_{ZZ}^{-1} \sigma_{ZY}\) khi và chỉ khi
+
+        \[
+        \beta_0 = \mu_Y - \sigma'_{ZY} \Sigma_{ZZ}^{-1} \mu_Z \quad \text{và} \quad \beta = \Sigma_{ZZ}^{-1} \sigma_{ZY}
+        \]
+
+\end{frame}
+
+%-----------------------------------------------------------
+\begin{frame}
+\frametitle{Chứng minh định lý 8.1}
+Xét các biến ngẫu nhiên có dạng $\beta_0 + \mathbf{\beta}' \mathbf{Z}$, ta có
+\[
+\text{Corr}(Y, \beta_0 + \mathbf{\beta}' \mathbf{Z}) = 
+\frac{\mathbf{\beta}' \boldsymbol{\sigma}_{ZY}}{\sqrt{\sigma_{YY} \mathbf{\beta}' \boldsymbol{\Sigma}_{ZZ} \mathbf{\beta}}}
+\]
+Để tìm giá trị lớn nhất của $\text{Corr}(Y, \beta_0 + \mathbf{\beta}' \mathbf{Z})$, ta sẽ phải sử dụng tới bất đẳng thức Cauchy mở rộng sau
+\[
+(\mathbf{u}' \mathbf{v})^2 \leq (\mathbf{u}' \mathbf{M} \mathbf{u}) (\mathbf{v}' \mathbf{M}^{-1} \mathbf{v})
+\]
+Trong đó $\mathbf{u}, \mathbf{v}$ là các vector cột có cùng kích cỡ, $\mathbf{M}$ là ma trận đối xứng xác định dương.
+Áp dụng bất đẳng thức trên với các vector cột $\mathbf{\beta}, \boldsymbol{\sigma}_{ZY}$ và ma trận đối xứng xác định dương $\boldsymbol{\Sigma}_{ZZ}$, ta có
+\[
+\text{Corr}(Y, \beta_0 + \mathbf{\beta}' \mathbf{Z}) = \frac{\mathbf{\beta}' \boldsymbol{\sigma}_{ZY}}{\sqrt{\sigma_{YY} \mathbf{\beta}' \boldsymbol{\Sigma}_{ZZ} \mathbf{\beta}}} \leq \sqrt{\frac{\boldsymbol{\beta'\Sigma_{ZZ}}\boldsymbol{\sigma}_{ZY}' \boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\sigma}_{ZY}}{\boldsymbol{\sigma_{YY} \beta' \Sigma_{ZZ}}}} = \sqrt{\frac{\boldsymbol{\sigma_{ZY}'}\boldsymbol{\Sigma_{ZZ}^{-1}} \boldsymbol{\sigma}'_{ZY}}{{\boldsymbol{\sigma_{YY}  }}}}
+\]
+Dấu "=" xảy ra khi và chỉ khi $\mathbf{\beta} = \widehat{\mathbf{\beta}}$ 
+
+Tương quan của biến $Y$ so với biến dự đoán tuyến tính tốt nhất (chính là biến $\widehat{\beta}_0 + \widehat{\boldsymbol{\beta}}' \mathbf{Z}$) được gọi là \textit{hệ số tương quan bội tổng thể}, xác định bởi
+\begin{equation}
+\rho_{Y(\mathbf{Z})} := \sqrt{\frac{\boldsymbol{\sigma}'_{ZY} \boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\sigma}_{ZY}}{\sigma_{YY}}} \label{eq:8.1}
+\end{equation}
+
+\end{frame}
+
+%-----------------------------------------------------------
+\begin{frame}
+\frametitle{Chứng minh định lý 8.1}
+Với cách định nghĩa 
+trên, ta viết lại giá trị trung bình bình phương thành
+\[
+\E \left( Y - \beta_0 - \boldsymbol{\beta}' \mathbf{Z} \right)^2 = \sigma_{YY} \left(1 - \rho_{Y(\mathbf{Z})}^2 \right)
+\]
+Ta còn có thể viết lại thành
+\begin{equation}
+\begin{aligned}
+\sigma_{YY} \left( 1 - \rho_{Y(\mathbf{Z})}^2 \right) &= \sigma_{YY} - \boldsymbol{\sigma}_{ZY}' \boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\sigma}_{ZY} = \frac{\det \boldsymbol{\Sigma}_{ZZ} \cdot \left( \sigma_{YY} - \boldsymbol{\sigma}_{ZY}' \boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\sigma}_{ZY} \right)}{\det \boldsymbol{\Sigma}_{ZZ}} \\
+&= \frac{\det \boldsymbol{\Sigma}}{\det \boldsymbol{\Sigma}_{ZZ}} = \frac{1}{\left( \boldsymbol{\Sigma}^{-1} \right)_{11}} \label{eq:8.2}
+\end{aligned}
+\end{equation}
+\end{frame}
+
+%-----------------------------------------------------------
+
+\begin{frame}
+\frametitle{Chứng minh định lý 8.1}
+Dấu "=" thứ ba của phép biến đổi (\ref{eq:8.2}) sử dụng công thức tính định thức của ma trận khối
+\[
+\det \left[
+\begin{array}{c:c}
+\mathbf{A} & \mathbf{B} \\
+\hdashline
+\mathbf{C} & \mathbf{D}
+\end{array}
+\right]
+= \det \mathbf{D} \cdot \det \left( \mathbf{A} - \mathbf{C} \mathbf{D}^{-1} \mathbf{B} \right)
+\]
+
+
+trong đó $\mathbf{A},\mathbf{B},\mathbf{C},\mathbf{D}$ là các ma trận thỏa mãn $\mathbf{A}$ là ma trận vuông, $\mathbf{D}$ là ma trận vuông khả nghịch và $\mathbf{B},\mathbf{C}$ là các ma trận hình chữ nhật phù hợp.
+Ta có thể chứng minh được tính chất trên của ma trận khối bằng cách phân tách thành tích của 3 ma trận
+\[
+\det \left[
+\begin{array}{c:c}
+\mathbf{A} & \mathbf{B} \\
+\hdashline
+\mathbf{C} & \mathbf{D}
+\end{array}
+\right]
+=
+\det \left[
+\begin{array}{c:c}
+\mathbf{I} & \mathbf{BD}^{-1} \\
+\hdashline
+\mathbf{0} & \mathbf{I}
+\end{array}
+\right]
+=
+\det \left[
+\begin{array}{c:c}
+\mathbf{A - BD^{-1}C} & \mathbf{0} \\
+\hdashline
+\mathbf{0} & \mathbf{D}
+\end{array}
+\right]
+\cdot
+\det \left[
+\begin{array}{c:c}
+\mathbf{I} & \mathbf{0} \\
+\hdashline
+\mathbf{D^{-1}C} & \mathbf{I}
+\end{array}
+\right].
+\]
+
+Lấy định thức hai vế, ta được điều phải chứng minh.
+Hệ số tương quan bội tổng thể được định nghĩa ở công thức (\ref{eq:8.1}) sẽ có hai cực trị $\rho_{Y(\mathbf{Z})} = 0$ và $\rho_{Y(\mathbf{Z})} = 1$.
+\begin{enumerate}
+    \item$\rho_{Y(\mathbf{Z})}=0$ thì biến $\mathbf{Z}$ sẽ không ảnh hưởng tới dự đoán, Y sẽ không dự đoán được bằng Z.
+    \item Trường hợp $\rho_{Y(\mathbf{Z})} = 1$ thì biến $Y$ có thể được dự đoán bằng biến \textbf{Z} mà không có sai số.
+\end{enumerate}
+
+\end{frame}
+
+%-----------------------------------------------------------
+
+\begin{frame}
+\frametitle{Định lý 8.2}
+    Vừa rồi ta chưa đưa vào giả thiết các biến ngẫu nhiên có phân phối chuẩn, nhưng ta lại có giả thiết biến $Y$ phụ thuộc tuyến tính với biến $\mathbf{Z}$.
+Thực chất hai giả thiết này khá "gần" nhau. Cụ thể hơn, nếu như ta cho
+\[
+\left[\begin{array}{c}
+Y \\
+\hdashline \underset{r \times 1}{\bar{Z}}
+\end{array}\right] \sim \mathcal{N}_{r+1}(\mu, \boldsymbol{\Sigma})
+\]
+Khi đó biến ngẫu nhiên $Y|\mathbf{Z} = \mathbf{z}$ cũng sẽ có phân phối chuẩn (xem chi tiết tại \cite{5})
+\[
+Y|\mathbf{Z}=\mathbf{z} \sim \mathcal{N} \left( \mu_Y + \boldsymbol{\sigma}_{ZY}' \boldsymbol{\Sigma}_{ZZ}^{-1} (\mathbf{z} - \mu_{Z}), \sigma_{YY} - \boldsymbol{\sigma}'_{ZY} \boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\sigma}_{ZY} \right)
+\]
+Như vậy
+\[
+\E(Y|\mathbf{Z} = \mathbf{z}) = \mu_Y + \boldsymbol{\sigma}_{ZY}' \boldsymbol{\Sigma}_{ZZ}^{-1} (\mathbf{z}-\mu_{Z}) = \left( \mu_Y - \boldsymbol{\sigma}'_{ZY} \boldsymbol{\Sigma}_{ZZ}^{-1} \mu_{Z} \right) + \boldsymbol{\sigma}'_{ZY} \boldsymbol{\Sigma}_{ZZ}^{-1} \mathbf{z} = \beta_0 + \boldsymbol{\beta}' \mathbf{z}
+\]
+
+\noindent\rule{\textwidth}{1pt}
+\end{frame}
+
+%-----------------------------------------------------------
+
+\begin{frame}
+\frametitle{Định lý 8.2}
+Từ đó ta kết luận rằng $E(Y|Z = z)$ là dự đoán tuyến tính tốt nhất 
+của Y khi có giả thiết tổng thể có phân phối chuẩn $\mathcal{N}_{r+1}(\mu, \boldsymbol{\Sigma})$.
+Mở rộng hơn nữa, đối với trường hợp tổng thể không có phân phối chuẩn thì
+E(Y|Z = z) không nhất thiết có dạng tuyến tính như trên.
+\\
+Thực tế, các giá trị $\mu$ và $\varepsilon$ là chưa biết, cho nên ta phải ước lượng chúng thông qua một mẫu ngẫu
+nhiên.
+Xét một mẫu kích thước n từ tổng thể có phân phối chuẩn $\mathcal{N}_{r+1}(\mu, \boldsymbol{\Sigma})$, ta đặt:
+
+$$
+\widehat{\boldsymbol{\mu}}=\left[\begin{array}{c}
+\bar{Y} \\
+\hdashline \underset{r \times 1}{\bar{Z}}
+\end{array}\right] \quad \text { và } \quad \boldsymbol{S}=\left[\begin{array}{c:c}
+s_{Y Y} & \underset{1 \times r}{\boldsymbol{s}_{\mathbf{Z Y}}^{\prime}} \\
+\hdashline \underset{r \times 1}{\boldsymbol{s}_{\mathbf{Z Y}}} & \underset{r \times r}{\boldsymbol{S}_{\mathbf{Z Z}}} 
+\end{array}\right]
+$$
+thứ tự là trung bình mẫu và ma trận hiệp phương sai mẫu.
+Ta có định lý sau:
+
+\end{frame}
+%-------------------------------------------------------------
+\begin{frame}
+\frametitle{Định lý 8.2}
+    
+
+\begin{block}{Định lý 8.2}
+    Xét mô hình hồi quy tuyến tính $Y = Z\beta +\varepsilon$ với ma trận hiệp phương sai $\Sigma_{ZZ}$ đầy hạng và các biến
+$Y,Z_1,Z_2,...,Z_r$ có hàm mật độ đồng thời tuân theo phân phối chuẩn $\mathcal{N}_{r+1}(\mu, \boldsymbol{\Sigma})$.
+Đặt
+$$
+\widehat{\boldsymbol{\mu}}=\left[\begin{array}{c}
+\bar{Y} \\
+\hdashline \underset{r \times 1}{\bar{Z}}
+\end{array}\right] \quad \text { và } \quad \boldsymbol{S}=\left[\begin{array}{c:c}
+s_{Y Y} & \underset{1 \times r}{\boldsymbol{s}_{\mathbf{Z Y}}^{\prime}} \\
+\hdashline \underset{r \times 1}{\boldsymbol{s}_{\mathbf{Z Y}}} & \underset{r \times r}{\boldsymbol{S}_{\mathbf{Z Z}}} 
+\end{array}\right]
+$$
+thứ tự là trung bình mẫu và ma trận hiệp phương sai mẫu của một mẫu kích thước n lấy ra từ tổng
+thể có phân phối chuẩn như trên.
+Khi đó ước lượng hợp lý cực đại cho các hệ số hồi quy là
+
+\begin{footnotesize}
+        \[
+        \widehat{\beta} = S_{ZZ}^{-1} s_{ZY} \quad \text{và} \quad \hat{\beta}_0 = \overline{Y} - s'_{ZY} S_{ZZ}^{-1} \overline{Z} = \overline{Y} - \widehat{\beta}' \overline{Z}
+        \]
+    \end{footnotesize}
+
+\end{block}
+    
+\end{frame}
+%-----------------------------------------------------------
+\begin{frame}
+\frametitle{Hệ quả }
+\begin{block}
+    
+
+Hệ quả 8.1
+Ước lượng hợp lý cực đại cho giá trị $E\left(Y-\beta_0-\widehat{\boldsymbol{\beta}}^{\prime} \boldsymbol{Z}\right)^2$ là
+
+$$
+\widehat{\sigma}_{Y Y \cdot Z}=\frac{n-1}{n}\left(s_{Y Y}-\boldsymbol{s}_{Z Y}^{\prime} \boldsymbol{S}_{Z Z}^{-1} \boldsymbol{s}_{Z Y}\right)
+=\frac{1}{n} \sum_{i=1}^n\left(Y-\widehat{\beta}_0-\widehat{\boldsymbol{\beta}}^{\prime} \boldsymbol{Z}_i\right)^2
+$$
+
+
+Ước lượng trên đang là ước 
+lượng chệch, để trở thành ước lượng không chệch thì ta sẽ hiệu chỉnh hóa để thành ước lượng mới $\widehat{\sigma}_{Y Y \cdot Z}^*$
+
+\begin{footnotesize}
+        \begin{align*}
+            \widehat{\sigma}_{YY \cdot Z} &= \frac{n-1}{n} \left( s_{YY} - \mathbf{s}_{ZY}' \mathbf{S}_{ZZ}^{-1} \mathbf{s}_{ZY} \right)  \\ 
+            &=\frac{n \widehat{\sigma}_{YY \cdot Z}}{n-r-1}\\
+            &= \frac{1}{n-r-1} \sum_{i=1}^n \left( Y - \hat{\beta}_0 - \hat{\boldsymbol{\beta}}' \mathbf{Z}_i \right)^2
+        \end{align*}
+    \end{footnotesize}
+\end{block}
+\end{frame}
+
+%-----------------------------------------------------------
+%==============================================================
+\section{Dự đoán nhiều biến bằng cách tiếp cận mới}
+%============================================================
+
+
+\begin{frame}
+\frametitle{ Dự đoán nhiều biến bằng cách tiếp cận mới}
+\begin{block}{Định lý 8.3}
+Xét mô hình hồi quy tuyến tính $Y=\boldsymbol{Z} \boldsymbol{\beta}+\boldsymbol{\varepsilon}$ với ma trận hiệp phương sai $\boldsymbol{\Sigma}_{\boldsymbol{Z Z}}$ đầy hạng và các biến $Y_1, Y_2, \ldots, Y_m, Z_1, Z_2, \ldots, Z_r$ có hàm mật độ đồng thời tuân theo phân phối chuẩn $\mathcal{N}_{m+r}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$.
+Khi đó hàm hồi quy tuyến tính của vector phản hồi $\boldsymbol{Y}$ với các biến dự đoán $\boldsymbol{Z}$ là
+
+$$
+\{\boldsymbol{Y} \mid \boldsymbol{Z}=\boldsymbol{z}\}=\boldsymbol{\beta}_0+[\boldsymbol{\beta}] \boldsymbol{z}=\boldsymbol{\mu}_{\boldsymbol{Y}}-\boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Z}} \boldsymbol{\Sigma}_{\boldsymbol{Z} \boldsymbol{Z}}^{-1}\left(\boldsymbol{z}-\boldsymbol{\mu}_{\boldsymbol{Z}}\right)
+$$
+
+trong đó $[\boldsymbol{\beta}]=\boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Z}} \boldsymbol{\Sigma}_{\boldsymbol{Z} \boldsymbol{Z}}^{-1}$ là ma trận của các hệ số hồi quy.
+\end{block}
+
+Chứng minh: Thực tế, các giá trị $\boldsymbol{\mu}$ và $\boldsymbol{\Sigma}$ là chưa biết, cho nên ta phải ước lượng chúng thông qua một mẫu ngẫu nhiên.
+Xét một mẫu kích thước $n$ từ tổng thể có phân phối chuẩn $\mathcal{N}_{m+r}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$, ta đặt
+
+$$
+\widehat{\boldsymbol{\mu}}=\left[\begin{array}{c}
+ \underset{m \times 1}{\overline{\boldsymbol{Y}}} \\
+\hdashline \underset{r \times 1}{\mathbf{Z}} \\
+\end{array}\right] \quad \text { và } \quad \boldsymbol{S}=\left[\begin{array}{c:c}
+\underset{m \times m}{\boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Y}}} & \underset{m \times r}{\boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Z}}} \\
+\hdashline \underset{r \times m}{\boldsymbol{S}_{\mathbf{Z Y}}} & \underset{r \times r}{\boldsymbol{S}_{\mathbf{Z Z}}}
+\end{array}\right]
+$$
+
+thứ tự là trung bình mẫu và hiệp phương sai mẫu.
+Ta có định lý sau:
+
+\end{frame}
+
+%------------------------------------------------------------
+%---------------------------------------------------------------
+% SLIDE: DỰ ĐOÁN NHIỀU BIẾN BẰNG CÁCH TIẾP CẬN MỚI
+%---------------------------------------------------------------
+\begin{frame}
+    \frametitle{Dự đoán nhiều biến bằng cách tiếp cận mới}
+    \begin{block}{Định lý 8.4}
+        Xét mô hình hồi quy tuyến tính \( Y = \boldsymbol{Z} \boldsymbol{\beta} + \boldsymbol{\varepsilon} \) với ma trận hiệp phương sai \(\boldsymbol{\Sigma}_{\boldsymbol{Z} \boldsymbol{Z}}\) đầy hạng và các biến \( Y_1, Y_2, \ldots, Y_m, Z_1, Z_2, \ldots, Z_r \) có hàm mật độ đồng thời tuân theo phân phối chuẩn \(\mathcal{N}_{m+r}(\boldsymbol{\mu}, \boldsymbol{\Sigma})\).
+        Đặt
+        \[
+\widehat{\boldsymbol{\mu}}=\left[\begin{array}{c}
+\overline{\boldsymbol{Y}} \\
+m \times 1 \\
+\hdashline \overline{\boldsymbol{Z}} \\
+r \times 1
+\end{array}\right] \quad \text { và } \quad \boldsymbol{S}=\left[\begin{array}{c:c}
+\underset{m \times m}{\boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Y}}} & \underset{m \times r}{\boldsymbol{S}_{\boldsymbol{Y Z}}} \\
+\hdashline \underset{r \times m}{\boldsymbol{S}_{\boldsymbol{Z} \boldsymbol{Y}}} & \underset{r \times r}{\boldsymbol{S}_{\boldsymbol{Z Z}}}
+\end{array}\right]
+        \]
+
+        thứ tự là trung bình mẫu và ma trận hiệp phương sai mẫu của một mẩu kích thước \( n \) lấy ra từ tổng thể có phân phối chuẩn như trên.
+        Khi đó ước lượng hợp lý cực đại cho hàm hồi quy tuyến tính là
+
+        \begin{align*}
+            \{\widehat{\boldsymbol{Y}} \mid \boldsymbol{Z} = \boldsymbol{z}\} &= \widehat{\boldsymbol{\beta}}_0 + [\widehat{\boldsymbol{\beta}}] \boldsymbol{z} \\
+            &= \overline{\boldsymbol{Y}} + \boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Z}} \boldsymbol{S}_{\boldsymbol{Z} \boldsymbol{Z}}^{-1} (\boldsymbol{z} - \overline{\boldsymbol{Z}})
+        \end{align*}
+    \end{block}
+
+\end{frame}
+
+%------------------------------------------------------------
+
+\begin{frame}
+    \begin{block}{Chứng minh}
+        Với một mẫu ngẫu nhiên gồm các giá trị quan 
+sát của vector ngẫu nhiên 
+        \(\left[\boldsymbol{Y}^\prime \boldsymbol{Z}^\prime\right]^\prime\) có phân phối chuẩn \(\mathcal{N}_{m+r}(\boldsymbol{\mu}, \boldsymbol{\Sigma})\), ta có các giá trị ước lượng hợp lý cực đại của \(\boldsymbol{\mu}\) và \(\boldsymbol{\Sigma}\):
+
+        \[
+        \hat{\boldsymbol{\mu}} = \left[\begin{array}{c}
+\overline{\boldsymbol{Y}} \\
+m \times 1 \\
+\hdashline \overline{\boldsymbol{Z}} \\
+r \times 1
+\end{array}\right]
+        \quad \text{và} \quad
+        \boldsymbol{S}=\left[\begin{array}{c:c}
+\underset{m \times m}{\boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Y}}} & \underset{m \times r}{\boldsymbol{S}_{\boldsymbol{Y Z}}} \\
+\hdashline \underset{r \times m}{\boldsymbol{S}_{\boldsymbol{Z} \boldsymbol{Y}}} & \underset{r \times r}{\boldsymbol{S}_{\boldsymbol{Z Z}}}
+\end{array}\right] = \frac{n-1}{n}\boldsymbol{S}
+        \]
+
+        Thay các giá trị ước lượng trên vào công thức hàm hồi quy tuyến tính đã nêu ở Định lý 8.3, ta được:
+
+        \begin{align*}
+            \{\hat{\boldsymbol{Y}} \mid \boldsymbol{Z} = \boldsymbol{z}\} &= \boldsymbol{\mu}_{\boldsymbol{Y}} - \boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Z}} \boldsymbol{\Sigma}_{\boldsymbol{Z} \boldsymbol{Z}}^{-1} (\boldsymbol{z} - \boldsymbol{\mu}_{\boldsymbol{Z}}) \\
+            &= \overline{\boldsymbol{Y}} - \left(\frac{n-1}{n}\right) \boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Z}} \left(\frac{n-1}{n}\right)^{-1} \boldsymbol{S}_{\boldsymbol{Z} \boldsymbol{Z}} (\boldsymbol{z} - \overline{\boldsymbol{Z}}) \\
+            &= \overline{\boldsymbol{Y}} - \boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Z}} \boldsymbol{S}_{\boldsymbol{Z} \boldsymbol{Z}}^{-1} (\boldsymbol{z} - \overline{\boldsymbol{Z}})
+        \end{align*}
+    \end{block}
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Hệ quả}
+
+\begin{block}{Hệ quả định lý 8.2}
+Ước lượng hợp lý cực đại cho ma trận hiệp phương sai $\boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Y} \mathbf{Z}}$ là
+
+$$
+\widehat{\boldsymbol{\Sigma}}_{\boldsymbol{Y} \boldsymbol{Y} \boldsymbol{Z}}=\frac{n-1}{n}\left(\boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Y}}-\boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Z}} \boldsymbol{S}_{\mathbf{Z} \boldsymbol{Z}}^{-1} \boldsymbol{S}_{\mathbf{Z} \boldsymbol{Y}}\right)=\frac{1}{n} \sum_{i=1}^n\left(\boldsymbol{Y}_i-\widehat{\boldsymbol{\beta}}_0-[\widehat{\boldsymbol{\beta}}] \mathbf{Z}_i\right)\left(\boldsymbol{Y}_i-\widehat{\boldsymbol{\beta}}_0-[\widehat{\boldsymbol{\beta}}] \mathbf{Z}_i\right)^{\prime}
+$$
+
+
+Ước lượng trên đang là ước lượng chệch, đế trở thành ước lượng không chệch thì ta sẽ hiệu chỉnh hóa đế thành ước lượng mới $\widehat{\Sigma}_{Y Y \text { Z }}^*$
+
+$$
+\begin{aligned}
+\widehat{\boldsymbol{\Sigma}}_{\boldsymbol{Y} \boldsymbol{Y} \mathbf{Z}}^* & =\frac{n \widehat{\boldsymbol{\Sigma}}_{\boldsymbol{Y} \boldsymbol{Y} \mathbf{Z}}}{n-r-1}=\frac{n-1}{n-r-1}\left(\boldsymbol{S}_{\boldsymbol{Y} \boldsymbol{Y}}-\boldsymbol{S}_{\boldsymbol{Y} 
+\mathbf{Z}} \boldsymbol{S}_{\mathbf{Z} \mathbf{Z}}^{-1} \boldsymbol{S}_{\mathbf{Z} \boldsymbol{Y}}\right) \\
+& =\frac{1}{n-r-1} \sum_{i=1}^n\left(\boldsymbol{Y}_i-\widehat{\boldsymbol{\beta}}_0-[\hat{\boldsymbol{\beta}}] \mathbf{Z}_i\right)\left(\boldsymbol{Y}_i-\widehat{\boldsymbol{\beta}}_0-[\hat{\boldsymbol{\beta}}] \mathbf{Z}_i\right)^{\prime}
+\end{aligned}
+$$
+\end{block}
+\end{frame}
+
+
+%============================================================
+\section{Hệ số tương quan riêng phần}
+%============================================================
+
+\begin{frame}
+\frametitle{Hệ số tương quan riêng phần}
+
+Vời hai biến phản hồi $Y_i$ và $Y_j$ bất kỳ của mô hình hổi quy tuyến tính đa bội, xét cặp sai số ược lượng thu được bằng biến dự đoán tuyến tính tốt nhất của $\boldsymbol{Y}$
+
+$$
+\begin{aligned}
+\hat{\varepsilon}_i & =Y_i-\mu_{Y_i}-\boldsymbol{\sigma}_{\mathbf{Z} Y_i}^{\prime} \boldsymbol{\Sigma}_{\mathbf{Z Z}}^{-1}\left(\boldsymbol{Z}-\boldsymbol{\mu}_{\mathbf{Z}}\right) \\
+\hat{\varepsilon}_j & =Y_j-\mu_{Y_j}-\boldsymbol{\sigma}_{\mathbf{Z} Y_j}^{\prime} \boldsymbol{\Sigma}_{\mathbf{Z Z}}^{-1}\left(\boldsymbol{Z}-\boldsymbol{\mu}_{\mathbf{Z}}\right)
+\end{aligned}
+$$
+
+
+Tương quan của cặp sai số này thế hiện mối tương quan trực tiếp của hai biến $Y_i$ và $Y_j$, sau khi loại bỏ đi mối tương quan gián tiếp là biến phản hồi 
+$\boldsymbol{Z}$. Tư đây ta nêu ra định nghỉa của hệ số tương quan riêng phần
+
+$$
+\rho_{Y_i Y_j \mathbf{Z}}:=\frac{\sigma_{Y_i Y_j} \mathbf{z}}{\sqrt{\sigma_{Y_i Y_i} \mathbf{z}} \sqrt{\sigma_{Y_j Y_j} \mathbf{z}}}
+$$
+
+trong đó $\sigma_{Y_i} Y_j$ là phần từ ở hàng $i$, cột $j$ của ma trận hiệp phương sai $\boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Y} \mathbf{Z}}$.
+\end{frame}
+
+
+
+%------------------------------------------------------------
+\begin{frame}
+\frametitle{Hệ số tương quan riêng phần}
+Thực tế, ta phải ước lượng ma trận hiệp phương sai $\boldsymbol{\Sigma}_{\boldsymbol{Y} \boldsymbol{Y} \boldsymbol{Z}}$ thông qua một mẩu ngẫu nhiên.
+Như vậy tương ứng với $\rho_{Y_i Y_j, Z}$, ta còn có $r_{Y_i Y_j Z}$ là hệ số tự tương quan riêng phần mẫu, xác định bởi
+
+$$
+r_{Y_i Y_j Z}:=\frac{s_{Y_i Y_j} \mathbf{Z}}{\sqrt{s_{Y_i Y_i} \mathbf{Z}} \sqrt{s_{Y_j Y_j} \mathbf{Z}}}
+$$
+\end{frame}
+
+
+%============================================================
+% NỘI DUNG TỪ PHAN2_CHUONG5.TEX
+%============================================================
+\section{So sánh hai công thức thiết lập mô hình hồi quy tuyến tính}
+\subsection{Hai cách tiếp cận}
+\begin{frame}
+\frametitle{Hai cách tiếp cận}
+\begin{itemize}
+\item \underline{\textbf{Cách 1:}} Mô hình hồi quy cổ điển 
+
+Các biến dự đoán $Z_i$ được coi là cố định.
+Ước lượng $\hat{y}$ có dạng:
+\begin{equation}
+\hat{y} = \bm{z}'\hat{\bm{\beta}}. \label{eq:91}
+\end{equation}
+
+\item \underline{\textbf{Cách 2:}} Mô hình hồi quy với biến ngẫu nhiên (phân phối chuẩn)
+
+Giả sử các biến ngẫu nhiên $Y, Z_1,\dots,Z_r$ có phân phối đồng thời chuẩn.
+Khi đó ước lượng $\hat{y}$ sẽ phức tap hơn:
+\begin{equation}\label{eq:ml}
+\hat y = \hat \mu_Y + \sigma_{ZY}\Sigma_{ZZ}^{-1}(\bm z - \hat\mu_Z).
+\end{equation}
+
+
+Để có thể so sánh hai công thức trên, ta sẽ phải biến đổi lại công thức của cách tiếp cận thứ nhất.
+\end{itemize}
+
+\end{frame}
+%%=====================================
+\subsection{Dạng quy tâm của mô hình hồi quy cổ điển}
+\begin{frame}
+\frametitle{Dạng quy tâm của mô hình hồi quy cổ điển}
+\begin{itemize}
+	\item Xét phương trình hồi quy tuyến tính của mỗi biến phản hồi $Y_j$:
+\begin{equation}
+Y_j = \beta_0 + \beta_1z_{1j} + \cdots + \beta_rz_{rj} + \varepsilon_j \label{eq:93}
+\end{equation}
+\item Thực hiện bước 'quy tâm' các biến dự đoán:
+\begin{equation}
+\beta_i z_{ij} = \beta_i (z_{ij} - \bar{z}_i) + \beta_i\bar{z}_i \label{eq:94}
+\end{equation}
+\item Khi đó:
+\begin{align*}
+Y_j &= (\beta_0 + \beta_1z_{1j} + \cdots + \beta_rz_{rj}) + \beta_1(z_{1j}-z_1) + \cdots + \beta_1(z_{rj}-z_r) + \varepsilon_j \\
+&:= \tilde{\beta} + \bm{\beta}_c'(\bm{z} - \bar{\bm{z}}) + \varepsilon_j
+\end{align*}
+\end{itemize}
+\end{frame}
+%%=====================================
+\begin{frame}
+\frametitle{Dạng quy tâm của mô hình hồi quy cổ điển}
+\begin{itemize}
+\item Viết lại dạng ma 
+trận:
+\begin{equation}
+\mathbf{Y}_{n\times1} = Z_c\bm{\beta}_c + \bm{\varepsilon}, \quad Z_c = [\mathbf{1}\;| Z_c^*],
+\end{equation}
+trong đó $Z_c^{*\prime}\mathbf{1} = 0$.
+Khi đó, ước lượng bình phương cực tiểu cho $\beta_C$ được viết lại thành:
+\begin{equation}
+\hat{\bm{\beta}}_c = (Z_c'Z_c)^{-1}Z_c'\mathbf{y} = \begin{bmatrix}\bar{y} \\ (Z_c^{*\prime}Z_c^*)^{-1}Z_c^{*\prime}\mathbf{y}\end{bmatrix}.
+\label{eq:96}
+\end{equation}
+\item Từ đó, ta được công thức mới dự đoán giá trị $\hat{y}$ là:
+\begin{equation}
+\hat{y} = \bar{y} + s'_{ZY}S_{ZZ}^{-1}(\bm{z} - \bar{\bm{z}}).
+\label{eq:98}
+\end{equation}
+\item Hơn nữa ta còn có ma trận hiệp phương sai của $\hat{\bm{\beta}}_c^*$ là:
+\begin{equation}
+(Z_c'Z_c)^{-1}\sigma^2 = \begin{bmatrix}\sigma^2/n & 0'\\0&(Z_c^{*\prime}Z_c^*)^{-1}\sigma^2\end{bmatrix}.
+\label{eq:99}
+\end{equation}
+\end{itemize}
+\end{frame}
+%%=====================================
+\subsection{So sánh hai công thức}
+\begin{frame}
+\frametitle{So sánh 2 công thức}
+\begin{itemize}
+\item Có thể thấy hai công thức là tương đồng với nhau khi ta thay:
+\[\hat{\mu}_Y\leftrightarrow \bar{y},\quad \hat{\mu}_Z\leftrightarrow \bar{\bm{z}},\quad \bm{\sigma}_{ZY}\leftrightarrow s_{ZY},\quad \bm{\Sigma}_{ZZ}\leftrightarrow S_{ZZ}.\]
+\item Hai cách tiếp cận cùng cho hàm ước lượng hồi quy tuyến tính, nhưng bản chất thì khác nhau hoàn toàn.
+\item Các giả thiết của cách tiếp cận thứ 2 có phần minh bạch hơn, dễ mở rộng cho mô hình phi tuyến.
+\end{itemize}
+\end{frame}
+%%=====================================
+\section{Mô hình hồi quy tuyến tính với chuỗi thời gian}
+\subsection{Sơ lược về mô hình chuỗi thời gian}
+\begin{frame}
+\frametitle{Sơ lược về mô hình chuỗi thời gian}
+\begin{itemize}
+\item	Dự báo chuỗi thời gian là một lớp mô hình quan trọng trong thống kê, kinh tế lượng và machine learning, áp dụng trên các chuỗi dữ liệu có yếu tố thời gian.
+\item Dự báo dựa trên giả định rằng các quy luật trong quá khứ sẽ lặp lại ở tương lai.
+\item Chuỗi có thể chứa xu hướng, chu kỳ, mùa vụ.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Sơ lược về mô hình chuỗi thời gian}
+\begin{block}{Mô hình cơ bản}
+\vspace{0.25cm}
+\begin{equation}
+X_t = \beta_0 + \beta_1X_{t-1} + \cdots + \beta_rX_{t-r} + \varepsilon_t \label{eq:101}
+\end{equation}
+\begin{itemize}
+    \item $X_{t}$ là giá trị tại thời điểm cần dự đoán.
+\item $X_{t-k}$ ($k=\overline{1,r}$) là giá trị tại thời điểm trước đó $k$ đơn vị thời gian so với hiện tại, còn gọi là giá trị LAG của chỉ số $k$.
+\item Cần xác định các biến $X_{t-k}$ nào (chỉ số LAG) để mô hình là tốt nhất, tránh hiện tượng "quá khớp".
+\end{itemize}
+\end{block}
+\end{frame}
+%%=====================================
+\subsection{Hệ số tự tương quan riêng phần (PACF) - mô hình  $AR_p$}
+\begin{frame}
+\frametitle{Hệ số tự tương quan riêng phần (PACF)}
+\begin{itemize}
+\item Hệ số tự tương quan riêng phần (PACF) của $X_t$ so với $X_{t-k}$ là hệ số $\varphi_{kk}$ trong:
+\begin{equation}
+X_t = \varphi_{k0} + \varphi_{k1}X_{t-1} + \cdots + \varphi_{kk}X_{t-k} + \varepsilon_t \label{eq:102}
+\end{equation}
+ \item Hệ số $\varphi_{kk}$ phản ánh mức độ tương quan trực tiếp  của biến $X_{t-k}$ đối với $X_t$, loại trừ mối tương quan gián tiếp.
+\item Giá trị $\varphi_{kk}$ được xác định bởi:
+\begin{equation}
+\varphi_{kk} = \begin{cases}
+\mathrm{Corr}(X_t,X_{t-1}), & k=1,\\
+\mathrm{Corr}(X_t - \underset{H}{\mathrm{proj}}(X_t), X_{t-k} - \underset{H}{\mathrm{proj}}(X_{t-k})), & k>1,
+\end{cases} \label{eq:103}
+\end{equation}
+Trong đó $H$ là không gian Hilbert con sinh bởi $\{X_{t-k+1},\dots,X_{t-1}\}$.
+\end{itemize}
+   
+
+\end{frame}
+%%=====================================
+\begin{frame}
+\frametitle{Mô hình tự hồi quy $AR_p$}
+\begin{itemize}
+\item Sau khi xác định các hệ số PACF, chọn các biến LAG có tương quan lớn từ đồ thị PACF.
+\item Sử dụng các biến đã chọn để thiết lập mô hình hồi quy.
+Nếu ta sử dụng $p$ biến LAG thì mô hình được gọi là quá trình tự hồi quy $AR_p$ (Autoregression - bậc p):
+
+\begin{equation}
+X_t = \varphi_0 + \varphi_1X_{t-1} + \cdots + \varphi_pX_{t-p} + \varepsilon_t
+\end{equation}
+\end{itemize}
+\end{frame}
+%%=====================================
+\subsection{Mô hình trung bình động $MA_q$}
+\begin{frame}
+\frametitle{Mô hình trung bình động $MA_q$}
+\begin{itemize}
+    \item Là quá trình dịch chuyển hoặc thay đổi giá trị trung bình của chuỗi theo thời gian.
+\item  Quá trình thay đổi trung bình có thể được coi như là một chuỗi nhiễu trắng.
+Mô hình $MA_q$ sẽ tìm mối liên hệ về mặt tuyến tính
+ giữa các phần tử ngẫu nhiên $\varepsilon_{t-s}$.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Mô hình trung bình động $MA_q$}
+\begin{block}{Mô hình $MA_q$}
+Mô hình $MA_q$ có dạng:
+\begin{equation}
+X_t = \mu + \varepsilon_t + \theta_1\varepsilon_{t-1} + \cdots + \theta_q\varepsilon_{t-q} \label{eq:104}
+\end{equation}
+trong đó $\mu$ là giá trị trung bình của chuỗi dữ liệu, $\theta_i$ là các tham số chưa biết và $\varepsilon_j$ là các nhiễu trắng.
+\end{block}
+
+\end{frame}
+%%=====================================
+
+\begin{frame}
+\frametitle{Mô hình trung bình động $MA_q$}
+\begin{block}{Các tính chất của nhiễu trắng:}
+\begin{itemize}
+    \item $E(\varepsilon_t)=0$
+    \item $\mathrm{Var}(\varepsilon_t)=\alpha$
+    \item $\mathrm{Cov}(\varepsilon_t,\varepsilon_{t-s})=0, \quad \forall s \leq t$
+    \end{itemize}
+\end{block}
+
+\pause
+\begin{block}{Mô hình $MA_q$ dưới dạng toán tử trễ:}
+\begin{equation}
+X_t = \mu + (1+\theta_1L+\cdots+\theta_qL^q)\varepsilon_t \label{eq:108}
+\end{equation}
+trong đó $L$ là toán tử LAG được định nghĩa bởi:
+\begin{equation}
+LX_t := X_{t-1}
+\end{equation}
+\end{block}
+\end{frame}
+
+
+\subsection{Kiểm tra tính dừng của chuỗi dữ liệu}
+\begin{frame}
+\frametitle{Kiểm tra tính dừng của chuỗi dữ liệu}
+\begin{itemize}
+\item Chuỗi thời gian dừng là chuỗi không bao hàm các yếu tố xu hướng, dao động xung quanh một giá trị trung bình.
+\item Chuỗi dừng có trung bình \& phương sai không đổi theo thời gian.
+\item Để kiểm định tính dừng của chuỗi dữ liệu, ta có thể dùng kiểm định Argument Dickey Fuller (ADF) hay kiểm định nghiệm đơn vị.
+Ta xét cặp giả thuyết và đối thuyết một phía:
+\[H_0: \varphi=1~(\text{chuỗi không dừng}),\quad H_1: |\varphi|<1~(\text{chuỗi dừng}).\]
+\item Với giá trị ngưỡng kiểm định DF, ta sẽ so sánh giá trị ngưỡng kiểm định này với giá trị tới hạn của phân phối Dickey - Fuller để đưa ra quyết định.
+\end{itemize}
+
+\end{frame}
+%%=====================================
+\subsection{Mô hình tự hồi quy tích hợp trung bình động (ARIMA)}
+\begin{frame}
+\frametitle{Mô hình ARIMA}
+\begin{itemize}
+    \item Nếu chuỗi dừng ta chỉ việc sử dụng mô hình ARMA (kết hợp của mô hình $AR_p$ và $MA_q$) để đưa ra dự báo tiếp theo.
+\item Nhưng với chuỗi không dừng, ta cần xử lý tính xu hướng của chuỗi dữ liệu bằng mô hình ARIMA ( là sự kết hợp của $AR_p$, $MA_q$ và một bước biến đổi sai phân cấp $d$ ).
+\item Ý tưởng của mô hình là ta sẽ dự đoán giá trị sai phân $\Delta X_t$:
+\begin{equation}
+\Delta X_t = X_{t+1} - X_{t}
+\end{equation}
+hoặc giá trị sai phân cấp d:
+\begin{equation}
+\Delta^dX_t = \Delta^{d-1}X_{t+1} - \Delta^{d-1}X_{t} \label{eq:ARIMA}
+\end{equation}
+\end{itemize}
+\end{frame}
+%%=====================================
+\begin{frame}
+\frametitle{Mô hình ARIMA}
+\begin{itemize}
+    \item Khi đó nếu bộ dữ liệu ban đầu có phương sai là $\sigma(t)$ thì sau khi lấy sai phân cấp $d$, bộ dữ liệu mới sẽ có phương sai $\sigma^{(d)}(t)$.
+Qua đó ta có thể quy một chuỗi về dạng chuỗi dừng.
+\vspace{0.25cm}
+
+    
+     Ví dụ: $\sigma(t)=at+b$ thành $\sigma'(t)=a$ (chuỗi dừng) sau sai phân cấp 1.
+
+\item Sau khi dự đoán $\Delta X_t$ bằng mô hình ARMA, có thể khôi phục $X_t$ qua công thức:
+\begin{equation}
+X_t = X_{t-1} + \Delta X_{t-1} = \cdots = X_\ell + \sum_{k=1}^{t-\ell}\Delta X_{t-k}
+\end{equation}
+\[
+\det 
+\left[
+\begin{array}{c:c}
+    A   & B \\ \hdashline
+    C &  D
+\end{array}
+\right]
+\]
+\end{itemize}
+\end{frame}

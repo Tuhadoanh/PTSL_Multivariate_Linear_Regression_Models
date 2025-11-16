@@ -1,0 +1,497 @@
+%Chương 1 ĐANG LỖI
+\section{Ước lượng Khoảng của Mô hình Hồi quy Tuyến tính}
+
+%-------------------------------------------------------------------------------
+% SLIDE 1: Giới thiệu Chương 4 & Bài toán (Trước 4.1)
+%-------------------------------------------------------------------------------
+\begin{frame}{Chương 4: Ước lượng Khoảng - Đặt vấn đề}
+
+    \begin{itemize}
+        \item \textbf{Bài toán:} Sau khi ước lượng điểm các hệ số hồi quy $\hat{\beta}$ và phương sai sai số $s^2$, ta cần:
+        \begin{enumerate}
+            \item Xác định độ tin cậy của các ước lượng này ($\beta$ và $\sigma^2$).
+            \item Kiểm tra các giả thuyết về mối quan hệ tuyến tính giữa các biến.
+        \end{enumerate}
+        
+        \item \textbf{Cơ sở lý thuyết:} Để thực hiện suy luận, ta cần bổ sung giả định:
+        \[
+            Y = Z\beta + \epsilon, \quad \text{với } \epsilon \sim \mathcal{N}_n(0, \sigma^2 I)
+        \]
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 2: Định lý 4.1 - Phân phối
+%-------------------------------------------------------------------------------
+\begin{frame}{Định lý 4.1: Phân phối của Ước lượng $\hat{\beta}$ và $RSS$}
+
+    \begin{block}{Phát biểu Định lý 4.1}
+        Xét mô hình hồi quy tuyến tính cổ điển $Y=Z\beta+\epsilon$ với ma trận $Z$ đầy hạng và $\epsilon \sim \mathcal{N}_n(0,\sigma^2I)$.
+        Khi đó:
+        \begin{itemize}
+            \item $\hat{\beta}=(Z^{\prime}Z)^{-1}Z^{\prime}Y\sim\mathcal{N}_{r+1}(\beta,\sigma^{2}(Z^{\prime}Z)^{-1})$
+            \item $n\hat{\sigma}^{2}=\hat{\epsilon}^{\prime}\hat{\epsilon}\sim\sigma^{2}\chi_{n-r-1}^{2}$
+            \item $\hat{\beta}$ và $\hat{\epsilon}$ là hai biến độc lập
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 3: Chứng minh 4.1 (Ý tưởng) & Quy ước s^2
+%-------------------------------------------------------------------------------
+\begin{frame}{Chứng minh Định lý 4.1 (Phần 1/3)}
+    \framesubtitle{Phân phối của Ước lượng Hệ số Hồi quy $\hat{\beta}$}
+
+     \begin{itemize}
+        \item \textbf{Cơ sở}: $\hat{\beta}$ là tổ hợp tuyến tính của vector biến chuẩn $\epsilon \sim \mathcal{N}_n(0, \sigma^2 I)$, nên $\hat{\beta}$ cũng là chuẩn.
+        \item \textbf{Biểu diễn $\hat{\beta}$}: Ta có $\hat{\beta} = (Z'Z)^{-1}Z'Y$. Thay $Y = Z\beta + \epsilon$ vào:
+        \[
+            \hat{\beta} = (Z'Z)^{-1}Z'(Z\beta + \epsilon) = \beta + (Z'Z)^{-1}Z'\epsilon
+        \]
+
+        \item \textbf{Kỳ vọng $E(\hat{\beta})$} (Giá trị trung bình):
+        \[
+            E(\hat{\beta}) = E\left(\beta + (Z'Z)^{-1}Z'\epsilon\right) = \beta + (Z'Z)^{-1}Z'E(\epsilon) = \beta
+        \]
+        (Vì $E(\epsilon) = 0$).
+        \item \textbf{Phương sai $Cov(\hat{\beta})$} (Tính bất định):
+        \begin{align*}
+            Cov(\hat{\beta}) &= Cov\left((Z'Z)^{-1}Z'\epsilon\right) \\
+            &= (Z'Z)^{-1}Z' \cdot Cov(\epsilon) \cdot Z(Z'Z)^{-1} \\
+            &= (Z'Z)^{-1}Z' (\sigma^2 I) Z(Z'Z)^{-1} \\
+            &= \sigma^2 (Z'Z)^{-1} (Z'Z) (Z'Z)^{-1} = \sigma^2 (Z'Z)^{-1}
+        \end{align*}
+        
+        \textbf{Kết luận}: $\hat{\beta} \sim \mathcal{N}_{r+1}(\beta, \sigma^2 (Z'Z)^{-1})$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Chứng minh Định lý 4.1 (Phần 2/3)}
+    \framesubtitle{Phân phối $\chi^2$ của $\hat{\epsilon}'\hat{\epsilon}$ (Tổng Bình phương Sai số)}
+
+    \begin{itemize}
+        \item \textbf{Biểu diễn $\hat{\epsilon}$}: Sai số ước lượng là $\hat{\epsilon} = Y - \hat{Y} = (I - H)Y$.
+        Thay $Y = Z\beta + \epsilon$:
+        \[
+            \hat{\epsilon} = (I - H)(Z\beta + \epsilon) = (I - H)\epsilon
+        \]
+        (Vì $Z\beta = HZ\beta = H\hat{Y}$ nên $(I-H)Z\beta = 0$).
+        \item \textbf{Dạng Toàn phương}: Tổng bình phương sai số là $\hat{\epsilon}'\hat{\epsilon}$:
+        \[
+            \frac{\hat{\epsilon}'\hat{\epsilon}}{\sigma^2} = \frac{\epsilon'(I - H)'(I - H)\epsilon}{\sigma^2} = \frac{\epsilon'(I - H)\epsilon}{\sigma^2}
+        \]
+        (Vì $(I-H)$ là ma trận chiếu và lũy đẳng).
+        \item \textbf{Áp dụng Định lý}: Theo định lý về Dạng Toàn phương của vector chuẩn $\epsilon \sim \mathcal{N}(0, \sigma^2 I)$, ta có:
+        \[
+            \frac{\hat{\epsilon}'\hat{\epsilon}}{\sigma^2} \sim \chi^2_{rank(I-H)}
+        \]
+
+        \item \textbf{Bậc Tự do}: Bậc tự do bằng hạng của ma trận $(I-H)$:
+        \[
+            rank(I-H) = n - rank(H) = n - (r+1)
+        \]
+        
+        \textbf{Kết luận}: $\frac{\hat{\epsilon}'\hat{\epsilon}}{\sigma^2} \sim \chi^2_{n-r-1}$.
+    \end{itemize}
+\end{frame}
+\begin{frame}{Chứng minh Định lý 4.1 (Phần 3/3)}
+    \framesubtitle{Tính Độc lập giữa $\hat{\beta}$ và $\hat{\epsilon}$}
+
+    \begin{itemize}
+        \item \textbf{Cơ sở}: Trong Phân phối Chuẩn Đa biến, hai vector là độc lập nếu Hiệp phương sai giữa chúng bằng vector 0.
+
+        \item \textbf{Tính $Cov(\hat{\beta}, \hat{\epsilon})$}: Ta cần chứng minh $Cov(\hat{\beta}, \hat{\epsilon}) = 0$.
+        \begin{align*}
+            Cov(\hat{\beta}, \hat{\epsilon}) &= Cov\left( (Z'Z)^{-1}Z'\epsilon, (I - H)\epsilon \right) \\
+            &= (Z'Z)^{-1}Z' \cdot Cov(\epsilon, \epsilon') \cdot (I - H) \\
+            &= (Z'Z)^{-1}Z' (\sigma^2 I) (I - H) \\
+            &= \sigma^2 (Z'Z)^{-1} (Z' - Z'H) 
+        \end{align*}
+
+        \item \textbf{Chứng minh $Z'H = Z'$}:
+        Ma trận $H$ (Hat matrix) được định nghĩa là $H = Z(Z'Z)^{-1}Z'$.
+        \[
+            Z'H = Z' \left( Z(Z'Z)^{-1}Z' \right) = (Z'Z) (Z'Z)^{-1} Z' = I \cdot Z' = Z'
+        \]
+
+        \item \textbf{Kết luận}:
+        Thay $Z'H = Z'$ vào công thức Hiệp phương sai:
+        \[
+            Cov(\hat{\beta}, \hat{\epsilon}) = \sigma^2 (Z'Z)^{-1} (Z' - Z') = 0
+        \]
+        Vì là phân phối chuẩn và $Cov(\hat{\beta}, \hat{\epsilon}) = 0$, nên $\hat{\beta}$ và $\hat{\epsilon}$ là độc lập thống kê.
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+% SLIDE 4: Định lý 4.2 - Miền Ellipsoid
+%-------------------------------------------------------------------------------
+\begin{frame}{Định lý 4.2: Miền Tin cậy Đồng thời cho $\beta$}
+
+    \begin{block}{Phát biểu Định lý 4.2 (Miền Tin cậy Đồng thời)}
+        Xét mô hình hồi quy tuyến tính cổ điển $Y=Z\beta+\epsilon$ với ma trận $Z$ là đầy hạng và $\mathcal{\epsilon}\sim\mathcal{N}_{n}(0,\sigma^{2}I).$ Khi đó miền tin cậy đồng thời mức $100(1-\alpha)\%$ của $\beta$ được xác định bởi ellipsoid
+        \[
+            (\beta-\hat{\beta})^{\prime}Z^{\prime}Z(\beta-\hat{\beta})\le(r+1)s^{2}F_{r+1,n-r-1}(\alpha)
+        \]
+    \end{block}
+
+     
+
+    \begin{itemize}
+        \item \textbf{Đặc điểm}: Miền Ellipsoid này tính đến sự tương quan giữa các hệ số ước lượng $\hat{\beta}_i$.
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 5: Chứng minh 4.2 (Ý tưởng F)
+%-------------------------------------------------------------------------------
+\begin{frame}{Chứng minh Định lý 4.2 (Phần 1/2)}
+    \framesubtitle{Xây dựng Dạng Toàn phương $\chi^2$ (Tử số và Mẫu số)}
+
+    \begin{itemize}
+        \item \textbf{Tử số ($\chi^2_{r+1}$)}: Dựa trên phân phối $\hat{\beta} \sim \mathcal{N}_{r+1}(\beta, \sigma^2 (Z'Z)^{-1})$, ta có Dạng Toàn phương $Q_1$:
+        \[
+            Q_1 = (\hat{\beta}-\beta)' \left( \frac{1}{\sigma^2} Z'Z \right) (\hat{\beta}-\beta) = \frac{(\hat{\beta}-\beta)'Z'Z(\hat{\beta}-\beta)}{\sigma^2} \sim \chi^2_{r+1}
+        \]
+     (Ma trận $\frac{1}{\sigma^2} Z'Z$ là nghịch đảo của ma trận hiệp phương sai của $\hat{\beta}$).
+        \item \textbf{Mẫu số ($\chi^2_{n-r-1}$)}: Dạng Toàn phương $Q_2$ được xây dựng từ RSS.
+        \[
+            Q_2 = \frac{\hat{\epsilon}'\hat{\epsilon}}{\sigma^2} \sim \chi^2_{n-r-1}
+        \]
+        (Với $\hat{\epsilon}'\hat{\epsilon} = s^2(n-r-1)$, $Q_2$ độc lập với $Q_1$).
+    \end{itemize}
+\end{frame}
+\begin{frame}{Chứng minh Định lý 4.2 (Phần 2/2)}
+    \framesubtitle{Lập Thống kê $F$ và Kết luận Miền Tin cậy}
+
+    \begin{itemize}
+        \item \textbf{Thống kê $F$}: Ta lập tỉ số của hai biến $\chi^2$ độc lập đã chuẩn hóa bằng bậc tự do:
+        \[
+            F = \frac{Q_1 / (r+1)}{Q_2 / (n-r-1)} \sim F_{r+1, n-r-1}
+        \]
+
+        \item \textbf{Rút gọn và Thay $s^2$}: Thay $Q_2$ bằng $s^2$ và $\frac{Q_1}{\sigma^2}$ vào công thức $F$:
+        \begin{align*}
+            F &= \frac{\frac{(\hat{\beta}-\beta)'Z'Z(\hat{\beta}-\beta)}{\sigma^2(r+1)}}{\frac{s^2(n-r-1)}{\sigma^2(n-r-1)}} = \frac{(\hat{\beta}-\beta)'Z'Z(\hat{\beta}-\beta)}{s^2(r+1)}
+        \end{align*}
+
+        \item \textbf{Kết luận Miền Tin cậy}: Miền tin cậy $100(1-\alpha)\%$ cho $\beta$ được xác định bởi điều kiện $F \le F_{r+1, n-r-1}(\alpha)$, dẫn đến Miền Ellipsoid:
+        \[
+            (\beta-\hat{\beta})^{\prime}Z^{\prime}Z(\beta-\hat{\beta})\le(r+1)s^{2}F_{r+1,n-r-1}(\alpha)
+        \]
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 6: Khoảng Tin cậy Riêng lẻ (Ứng dụng t)
+%-------------------------------------------------------------------------------
+\begin{frame}{Khoảng Tin cậy Riêng lẻ cho Hệ số $\beta_i$}
+
+    \begin{block}{Phát biểu Khoảng Tin cậy $100(1-\alpha)\%$}
+        Khoảng tin cậy cho từng hệ số hồi quy $\beta_i$ (không đồng thời) là:
+        \[
+            \hat{\beta}_{i}\pm t_{n-r-1}(\frac{\alpha}{2})\sqrt{(s^{2}(Z^{\prime}Z)^{-1})_{(i+1)(i+1)}}
+        \]
+    \end{block}
+
+     
+
+    \begin{itemize}
+        \item \textbf{Cơ sở}: Thống kê $T_i = \frac{\hat{\beta}_i - \beta_i}{\sqrt{\hat{V}ar(\hat{\beta}_i)}} \sim t_{n-r-1}$.
+        \item \textbf{Lưu ý}: Khoảng này thường được sử dụng trong thực tế để kiểm tra nhanh tầm quan trọng của từng biến.
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 7: Bối cảnh 4.2 - Dẫn vào Kiểm định Tỷ số Hợp lý
+%-------------------------------------------------------------------------------
+\begin{frame}{Kiểm định Tỷ số Hợp lý}
+
+    \begin{itemize}
+        \item \textbf{Mục tiêu}: Chọn ra một tập con các biến dự đoán có ảnh hưởng đáng kể đối với biến phản hồi.
+        \item \textbf{Bài toán}: Kiểm tra xem liệu một nhóm biến $Z_{(2)}$ có thể bị lược bỏ khỏi mô hình hay không.
+        \item \textbf{Giả thuyết}:
+        \[
+            H_{0}:\beta_{(2)}=0 \text{ và } H_{1}:\beta_{(2)}\ne0
+        \]
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 8: Định lý 4.3 - Kiểm định beta_(2)=0
+%-------------------------------------------------------------------------------
+\begin{frame}{Định lý 4.3: Kiểm định $H_0: \beta_{(2)} = 0$}
+
+    \begin{block}{Phát biểu Định lý 4.3}
+        Xét mô hình hồi quy tuyến tính cổ điển $Y=Z\beta+\epsilon$ với ma trận $Z$ đầy hạng và $\mathcal{\epsilon}\sim\mathcal{N}_{n}(0,\sigma^{2}I).$ Khi đó, ta bác bỏ giả thuyết $H_{0}:\beta_{(2)}=0$ với mức ý nghĩa $100\alpha\%$ nếu
+        \[
+            RSS(\beta_{(1)})-RSS(\beta)>s^{2}(r-q)F_{r-q,n-r-1}(\alpha)
+        \]
+    \end{block}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 9: Chứng minh 4.3 (Ý tưởng Tỷ số Hợp lý)
+%-------------------------------------------------------------------------------
+\begin{frame}{Chứng minh Định lý 4.3 (Phần 1/2)}
+    \framesubtitle{Thiết lập Tỷ số Hợp lý $\Lambda$ và Kết nối với $RSS$}
+
+    \begin{itemize}
+        \item \textbf{Cơ sở}: Kiểm định dựa trên Tỷ số Hợp lý $\Lambda$, so sánh khả năng xảy ra của dữ liệu dưới giả thuyết $H_0$ (mô hình rút gọn) và $H_1$ (mô hình đầy đủ).
+        \[
+            \Lambda = \frac{\max_{\beta_{(1)},\sigma^{2}}\mathcal{L}(\beta_{(1)},\sigma^{2})}{\max_{\beta,\sigma^{2}}\mathcal{L}(\beta,\sigma^{2})} \text{(Trong đó $\mathcal{L}$ là hàm hợp lý).}
+        \]  
+
+        \item \textbf{Giá trị Hợp lý Cực đại (MLE)}: Giá trị cực đại của $\mathcal{L}$ đạt được tại các ước lượng MLE ($\hat{\beta}$ và $\hat{\sigma}^2$):
+        \begin{itemize}
+            \item Mô hình Đầy đủ ($H_1$): $\max \mathcal{L} \propto (\hat{\sigma}^2)^{-n/2}$ với $n\hat{\sigma}^2 = RSS(\hat{\beta})$.
+            \item Mô hình Rút gọn ($H_0$): $\max \mathcal{L}_{H_0} \propto (\hat{\sigma}_1^2)^{-n/2}$ với $n\hat{\sigma}_1^2 = RSS(\hat{\beta}_{(1)})$.
+        \end{itemize}
+
+        \item \textbf{Biểu diễn $\Lambda$ qua $\hat{\sigma}^2$}:
+        \[
+            \Lambda = \left(\frac{\hat{\sigma}_1^2}{\hat{\sigma}^2}\right)^{-n/2} = \left(1 + \frac{\hat{\sigma}_1^2 - \hat{\sigma}^2}{\hat{\sigma}^2}\right)^{-n/2}
+        \]
+        \item \textbf{Tiêu chuẩn Bác bỏ}: Bác bỏ $H_0$ nếu $\Lambda$ nhỏ, tương đương với việc tỉ số $\frac{\hat{\sigma}_1^2 - \hat{\sigma}^2}{\hat{\sigma}^2}$ đủ lớn.
+    \end{itemize}
+\end{frame}
+\begin{frame}{Chứng minh Định lý 4.3 (Phần 2/2)}
+    \framesubtitle{Chuyển đổi Tỷ số Hợp lý sang Thống kê $F$}
+
+    \begin{itemize}
+        \item \textbf{Tử số $RSS_{extra}$}: Phần tăng thêm của RSS do ràng buộc $H_0$ gây ra chính là $n(\hat{\sigma}_1^2 - \hat{\sigma}^2)$:
+        \[
+            RSS_{extra} = RSS(\hat{\beta}_{(1)}) - RSS(\hat{\beta})
+        \]
+
+        \item \textbf{Phân phối của $RSS_{extra}$}:
+           \[
+            \frac{RSS_{extra}}{\sigma^2} \sim \chi^2_{r-q}
+           \]
+        ($RSS_{extra}$ độc lập với $RSS(\hat{\beta})$).
+        \item \textbf{Mẫu số}: $s^2 = \frac{RSS(\hat{\beta})}{n-r-1}$ là ước lượng không chệch của $\sigma^2$.
+        \item \textbf{Thống kê $F$}: Thống kê $\frac{RSS_{extra}/\sigma^2}{RSS(\hat{\beta})/\sigma^2}$ được chuẩn hóa bằng bậc tự do sẽ tuân theo $F$:
+        \[
+            F = \frac{(RSS(\hat{\beta}_{(1)})-RSS(\hat{\beta}))/(r-q)}{s^{2}} \sim F_{r-q,n-r-1}
+        \]
+        \textbf{Kết luận}: Bác bỏ $H_0$ khi $F$ lớn hơn giá trị tới hạn $F_{r-q,n-r-1}(\alpha)$.
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 10: Bối cảnh 4.4 - Dẫn vào Kiểm định Tổng quát
+%-------------------------------------------------------------------------------
+\begin{frame}{Kiểm định Giả thuyết Tổng quát}
+
+    \begin{itemize}
+        \item \textbf{Mục tiêu}: Kiểm định các giả thuyết về \textbf{tổ hợp tuyến tính} của các hệ số hồi quy.
+        \item \textbf{Hình thức}: $H_{0}:C\beta=c_{0}$ và $H_{1}:C\beta\ne c_{0}$.
+        \item \textbf{Ứng dụng}: Giả thuyết $H_0: \beta_{(2)}=0$ là một trường hợp đặc biệt khi chọn $C$ và $c_0$ phù hợp.
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 11: Định lý 4.4 - Kiểm định Tổng quát
+%-------------------------------------------------------------------------------
+\begin{frame}{Định lý 4.4: Kiểm định Giả thuyết Tổng quát $H_0: C\beta = c_0$}
+
+    \begin{block}{Phát biểu Định lý 4.4}
+        Xét mô hình hồi quy tuyến tính cổ điển $Y=Z\beta+\epsilon$ với ma trận $Z$ đầy hạng và $\mathcal{\epsilon}\sim\mathcal{N}_{n}(0,\sigma^{2}I)$.
+        Khi đó, giả thuyết $H_{0}:C\beta=c_{0}$ bị bác bỏ với mức ý nghĩa $100\alpha\%$ nếu
+        \[
+            (C\hat{\beta}-c_{0})^{\prime}(C(Z^{\prime}Z)^{-1}C^{\prime})^{-1}(C\hat{\beta}-c_{0})>s^{2}(r-q)F_{r-q,n-r-1}(\alpha)
+        \]
+    \end{block}
+\end{frame}
+%-------------------------------------------------------------------------------
+% SLIDE (12): Chứng minh 4.4 (Ý tưởng)
+%-------------------------------------------------------------------------------
+\begin{frame}{Chứng minh Định lý 4.4 }
+    \framesubtitle{Dẫn ra Thống kê $F$ từ vector $C\hat{\beta} - c_0$}
+
+    \begin{itemize}
+        \item \textbf{Phân phối của $C\hat{\beta}$}: Do $\hat{\beta} \sim \mathcal{N}_{r+1}(\beta, \sigma^2 (Z'Z)^{-1})$, vector $C\hat{\beta}$ cũng là chuẩn.
+        \[
+            C\hat{\beta} \sim \mathcal{N}_q(C\beta, \sigma^2 C(Z'Z)^{-1}C') \text{(Với $C$ là ma trận $q \times (r+1)$).}
+        \]
+        \item \textbf{Đại lượng chuẩn hóa (Dưới $H_0$)}: Nếu $H_0: C\beta = c_0$ là đúng, vector $C\hat{\beta} - c_0$ có kỳ vọng bằng 0.
+
+        \item \textbf{Thống kê $\chi^2$ (Tử số)}: Áp dụng định lý về Dạng Toàn phương cho vector chuẩn ($C\hat{\beta} - c_0$), ta có:
+        \[
+            Q_3 = \frac{(C\hat{\beta}-c_{0})^{\prime}[C(Z^{\prime}Z)^{-1}C^{\prime}]^{-1}(C\hat{\beta}-c_{0})}{\sigma^2} \sim \chi^2_q
+        \]
+        (Đây là dạng Mahalanobis squared distance).
+        \item \textbf{Thống kê $F$}: Thống kê $F$ được lập bằng tỉ số giữa $Q_3$ và $Q_2 = \hat{\epsilon}'\hat{\epsilon}/\sigma^2$ độc lập:
+        \[
+            F = \frac{Q_3/q}{s^2} = \frac{(C\hat{\beta}-c_{0})^{\prime}[C(Z^{\prime}Z)^{-1}C^{\prime}]^{-1}(C\hat{\beta}-c_{0})}{q s^2} \sim F_{r-q, n-r-1}
+        \]
+        \textbf{Kết luận}: Bác bỏ $H_0$ nếu $F_{obs}$ lớn hơn giá trị tới hạn $F_{r-q, n-r-1}(\alpha)$.
+    \end{itemize}
+\end{frame}
+
+%=================================================================
+% HẾT PHAN2_CHUONG1.TEX
+% NỘI DUNG TỪ PHAN3_CHUONG1.TEX (Bắt đầu Chương 5)
+%=================================================================
+
+\section{Ước lượng Hàm Hồi quy Tuyến tính}
+
+%-------------------------------------------------------------------------------
+% SLIDE 1: Bối cảnh & Bài toán Dự đoán
+%-------------------------------------------------------------------------------
+\begin{frame}{Chương 5: Ước lượng Hàm Hồi quy - Đặt vấn đề}
+
+    \begin{itemize}
+        \item \textbf{Mục tiêu}: Sử dụng hàm hồi quy đã ước lượng $\hat{Y}(z) = z'\hat{\beta}$ để dự đoán giá trị tại một điểm mới $z_0$.
+        \item \textbf{Phân biệt hai loại dự đoán tại $z_0$}:
+        \begin{enumerate}
+            \item \textbf{Ước lượng Hàm Hồi quy} ($\eta_0$): Ước lượng \textbf{giá trị kỳ vọng} (trung bình) của $Y$ tại $z_0$.
+            ($\eta_0 = z_0'\beta$).
+            \item \textbf{Dự đoán Quan sát mới} ($Y_0$): Dự đoán \textbf{một giá trị riêng lẻ} của $Y$ tại $z_0$.
+            ($Y_0 = z_0'\beta + \epsilon_0$).
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 2: Định lý 5.1 - Ước lượng Hàm Hồi quy (CI)
+%-------------------------------------------------------------------------------
+\begin{frame}{Định lý 5.1: Ước lượng Hàm Hồi quy $\eta_0=E(Y_0|z_0)$}
+
+    \begin{block}{Phát biểu Định lý 5.1 (Khoảng Tin cậy)}
+        Với mô hình hồi quy $Y=Z\beta+\epsilon$ và $\epsilon \sim \mathcal{N}_n(0,\sigma^2I)$, khoảng tin cậy mức $100(1-\alpha)\%$ cho giá trị kỳ vọng $\eta_0=E(Y_0|z_0)=z_0'\beta$ là:
+        \[
+            z_0'\hat{\beta} \pm t_{n-r-1}(\alpha/2)\sqrt{z_0'(Z'Z)^{-1}z_0 s^2}
+        \]
+    \end{block}
+    
+    \begin{itemize}
+        \item \textbf{Ước lượng điểm}: $\hat{\eta}_0 = z_0'\hat{\beta}$.
+        \item \textbf{Phương sai của $\hat{\eta}_0$}: $Var(\hat{\eta}_0) = z_0'(Z'Z)^{-1}z_0\sigma^2$.
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 3: Chứng minh 5.1 (Ý tưởng CI)
+%-------------------------------------------------------------------------------
+\begin{frame}{Chứng minh Định lý 5.1 (Phần 1/2)}
+    \framesubtitle{Phân phối của $\hat{\eta}_0$ và Xây dựng Thống kê Chuẩn $Z$}
+
+    \begin{itemize}
+        \item \textbf{Phần 1: Phân phối của Ước lượng $\hat{\eta}_0 = z_0'\hat{\beta}$}
+        
+        Ước lượng hàm hồi quy tại $z_0$ là $\hat{\eta}_0 = z_0'\hat{\beta}$.
+        \begin{itemize}
+            \item \textbf{Kỳ vọng}: $E(\hat{\eta}_0) = z_0'E(\hat{\beta}) = z_0'\beta = \eta_0$.
+            ($\hat{\eta}_0$ là không chệch).
+            \item \textbf{Phương sai}: $Var(\hat{\eta}_0) = Var(z_0'\hat{\beta}) = z_0' Cov(\hat{\beta}) z_0$.
+            \[
+                Var(\hat{\eta}_0) = z_0' (\sigma^2 (Z'Z)^{-1}) z_0 = \sigma^2 z_0'(Z'Z)^{-1}z_0
+            \]
+        \end{itemize}
+        \textbf{Kết luận}: $\hat{\eta}_0 \sim \mathcal{N}(\eta_0, \sigma^2 z_0'(Z'Z)^{-1}z_0)$.
+        \item \textbf{Phần 2: Xây dựng Thống kê Chuẩn Z}
+        
+        Ta chuẩn hóa $\hat{\eta}_0$ bằng cách trừ kỳ vọng $\eta_0$ và chia cho độ lệch chuẩn $\sqrt{Var(\hat{\eta}_0)}$:
+        \[
+            Z = \frac{\hat{\eta}_0 - \eta_0}{\sqrt{Var(\hat{\eta}_0)}} = \frac{z_0'\hat{\beta} - z_0'\beta}{\sqrt{\sigma^2 z_0'(Z'Z)^{-1}z_0}} \sim \mathcal{N}(0, 1)
+        \]
+    \end{itemize}
+\end{frame}
+\begin{frame}{Chứng minh Định lý 5.1 (Phần 2/2)}
+    \framesubtitle{Chuyển đổi sang Thống kê $t$ và Kết luận Khoảng Tin cậy}
+
+    \begin{itemize}
+        \item \textbf{Phần 3: Chuyển sang Thống kê $t$}
+        
+        Để loại bỏ $\sigma^2$ chưa biết, ta thay thế $\sigma^2$ bằng ước lượng $s^2 = \frac{\hat{\epsilon}'\hat{\epsilon}}{n-r-1}$ độc lập với $\hat{\beta}$.
+        \[
+            T = \frac{Z}{\sqrt{\chi^2_{n-r-1}/(n-r-1)}} = \frac{(z_0'\hat{\beta} - z_0'\beta)/\sqrt{\sigma^2 z_0'(Z'Z)^{-1}z_0}}{\sqrt{s^2/\sigma^2}} \sim t_{n-r-1}
+        \]
+        Rút gọn, ta được thống kê $t$:
+        \[
+            T = \frac{z_0'\hat{\beta} - z_0'\beta}{\sqrt{s^2 z_0'(Z'Z)^{-1}z_0}} \sim t_{n-r-1}
+        \]
+
+        \item \textbf{Phần 4: Kết luận Khoảng Tin cậy}
+       
+        Khoảng Tin cậy $100(1-\alpha)\%$ cho $\eta_0$ được xác định bởi điều kiện $|T| \le t_{n-r-1}(\alpha/2)$, dẫn đến:
+        \[
+            z_0'\hat{\beta} \pm t_{n-r-1}(\alpha/2)\sqrt{s^2 z_0'(Z'Z)^{-1}z_0}
+        \]
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------------------------------
+% SLIDE 4: Định lý 5.2 - Dự đoán Quan sát mới (PI)
+%-------------------------------------------------------------------------------
+\begin{frame}{Định lý 5.2: Dự đoán Quan sát mới $Y_0$}
+
+    \begin{block}{Phát biểu Định lý 5.2 (Khoảng Dự đoán)}
+        Khoảng dự đoán mức $100(1-\alpha)\%$ cho một quan sát mới $Y_0$ tại $z_0$ là:
+        \[
+           z_0'\hat{\beta} \pm t_{n-r-1}(\alpha/2)\sqrt{s^2(1 + z_0'(Z'Z)^{-1}z_0)}
+        \]
+    \end{block}
+
+    \begin{itemize}
+        \item \textbf{Sai số Dự đoán}: $\Delta = Y_0 - z_0'\hat{\beta}$.
+        \item \textbf{Nguồn gốc}: $Y_0$ bao gồm giá trị kỳ vọng ($z_0'\beta$) và sai số ngẫu nhiên ($\epsilon_0$).
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------------------
+% SLIDE 5: Chứng minh 5.2 (Ý tưởng PI)
+%-------------------------------------------------------------------------------
+\begin{frame}{Chứng minh Định lý 5.2 (Phần 1/2)}
+    \framesubtitle{Phân tích Sai số Dự đoán $\Delta = Y_0 - z_0'\hat{\beta}$}
+
+    \begin{itemize}
+        \item \textbf{Cơ sở}: Quan sát mới $Y_0$ có mô hình $Y_0 = z_0'\beta + \epsilon_0$, với $\epsilon_0 \sim \mathcal{N}(0, \sigma^2)$ độc lập với dữ liệu huấn luyện.
+        \item \textbf{Sai số Dự đoán $\Delta$}: Ta xét sai số giữa quan sát mới $Y_0$ và ước lượng $\hat{Y}(z_0)$:
+        \begin{align*}
+            \Delta &= Y_0 - z_0'\hat{\beta} \\
+            &= (z_0'\beta + \epsilon_0) - z_0'\hat{\beta} \\
+            &= \epsilon_0 - z_0'(\hat{\beta} - \beta) 
+        \end{align*}
+        
+           \item \textbf{Kỳ vọng $E(\Delta)$}: Do $E(\epsilon_0)=0$ và $E(\hat{\beta})=\beta$:
+        \[
+            E(\Delta) = E(\epsilon_0) - z_0'(E(\hat{\beta}) - \beta) = 0 - z_0'(\beta - \beta) = 0
+        \]
+
+        \item \textbf{Phương sai $Var(\Delta)$}: Do $\epsilon_0$ độc lập với $\hat{\beta}$ (và $z_0'(\hat{\beta}-\beta)$), ta có:
+        \[
+            Var(\Delta) = Var(\epsilon_0) + Var(z_0'(\hat{\beta} - \beta))
+        \]
+        \begin{itemize}
+            \item $Var(\epsilon_0) = \sigma^2$ (Sai số ngẫu nhiên)
+            \item $Var(z_0'(\hat{\beta}-\beta)) = \sigma^2 z_0'(Z'Z)^{-1}z_0$ (Sai số ước lượng $\hat{\beta}$)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+\begin{frame}{Chứng minh Định lý 5.2 (Phần 2/2)}
+    \framesubtitle{Lập Thống kê $t$ và Kết luận Khoảng Dự đoán (PI)}
+
+    \begin{itemize}
+        \item \textbf{Phân phối Phương sai $Var(\Delta)$}:
+        \[
+            Var(\Delta) = \sigma^2 + \sigma^2 z_0'(Z'Z)^{-1}z_0 = \sigma^2 \left( 1 + z_0'(Z'Z)^{-1}z_0 \right)
+        \]
+        \textbf{Lưu ý}: Số hạng **$1$** là nguồn gốc khiến PI rộng hơn CI (Khoảng Tin cậy).
+        \item \textbf{Thống kê Chuẩn Z}:
+        \[
+            Z = \frac{\Delta}{\sqrt{Var(\Delta)}} = \frac{Y_0 - z_0'\hat{\beta}}{\sqrt{\sigma^2(1 + z_0'(Z'Z)^{-1}z_0)}} \sim \mathcal{N}(0, 1)
+        \]
+
+        \item \textbf{Chuyển sang Thống kê $t$}: Thay thế $\sigma^2$ bằng ước lượng $s^2$ độc lập:
+        \[
+            T = \frac{Y_0 - z_0'\hat{\beta}}{\sqrt{s^2(1 + z_0'(Z'Z)^{-1}z_0)}} \sim t_{n-r-1}
+        \]
+ 
+        \item \textbf{Kết luận Khoảng Dự đoán (PI)}:
+        
+        Khoảng Dự đoán $100(1-\alpha)\%$ cho $Y_0$ được xác định bởi điều kiện $|T| \le t_{n-r-1}(\alpha/2)$, dẫn đến:
+        \[
+            z_0'\hat{\beta} \pm t_{n-r-1}(\alpha/2)\sqrt{s^2(1 + z_0'(Z'Z)^{-1}z_0)}
+        \]
+    \end{itemize}
+\end{frame}

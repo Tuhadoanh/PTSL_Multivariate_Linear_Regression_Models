@@ -1,0 +1,178 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ĐÂY LÀ FILE CHÍNH (main.tex)
+% File này quản lý toàn bộ cài đặt và gọi các chương con
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[notheorems,hyperref={bookmarks=true}]{beamer}
+\usepackage[framesassubsections]{beamerprosper}
+\hypersetup{pdfpagemode=FullScreen}
+\usepackage[utf8]{vietnam}
+%\usepackage[tcvn]{vietnam}
+\usepackage[english]{babel}
+\usepackage{ulem} %for underlying+
+\usepackage{pifont} %for creating dingautolist
+\usepackage[mathscr]{eucal}
+\usepackage{amsmath, amsthm, amssymb,amsxtra,latexsym,amscd,graphics,graphpap}
+\usepackage{indentfirst}
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage{amsbsy}
+\usepackage{epsfig}
+\usepackage{natbib}
+%\usepackage{pst-plot}
+%\usepackage{msc}
+%\usepackage{musixtex}
+% --- ĐẢM BẢO CÁC GÓI NÀY CÓ TRONG main.tex ---
+\usepackage{mathtools}  % Cần cho 'phan3_chuong1.tex' [cite: 52]
+\usepackage{amsfonts}   % Cần cho \mathbb{} [cite: 52]
+\usepackage{amsbsy}     % Cần cho \boldsymbol
+
+\usepackage{pdfpages}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{multimedia}
+\usepackage{boxedminipage}
+\usepackage{tikz}
+\usepackage{nicefrac}
+\usepackage{diagbox}
+\usepackage{graphicx}
+\setbeamertemplate{theorems}[numbered] % Đánh số định lý.
+
+% --- THÊM CÁC GÓI NÀY VÀO main.tex ---
+\usepackage{mathtools}  % Gói mới (bổ sung cho amsmath)
+\usepackage{arydshln}   % Gói mới (để vẽ đường nét đứt trong bảng)
+\usepackage{bm}
+\usepackage{amsfonts}   % Gói mới (cho \mathbb)
+
+% --- THÊM CÁC LỆNH NÀY VÀO main.tex (khu vực \providecommand) ---
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+% --- CÀI ĐẶT THEME VÀ MÀU SẮC ---
+% (Giữ nguyên toàn bộ cài đặt của bạn)
+\usetheme{Copenhagen}
+\usecolortheme{rose} 
+\setbeamertemplate{headline}{}
+\usefonttheme[onlylarge]{structurebold}
+\usefonttheme{professionalfonts}
+
+\setbeamercolor{title}{fg=red!80!black,bg=blue!20!white}
+\setbeamertemplate{section in head/foot shaded}[default][20]
+\setbeamertemplate{subsection in head/foot shaded}[default][20]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamerfont{small}{size=\small}
+\setbeamerfont{footnote}{size=\footnotesize}
+\setbeamerfont{script}{size=\scriptsize}
+\setbeamerfont{tiny}{size=\tiny}
+
+% --- CÁC LỆNH TẮT VÀ MÔI TRƯỜNG ---
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\Mat}{\textsc{MatLab }}
+\providecommand{\lr}[1]{\left( #1 \right)} 
+\providecommand{\Lr}[1]{\left[ #1 \right]}
+\providecommand{\LR}[1]{\left\{ #1 \right\}} 
+\providecommand{\abs}[1]{\left\vert #1 \right\vert} 
+\providecommand{\norm}[1]{\left\Vert #1 \right\Vert} 
+\providecommand{\ov}[1]{\overline {#1}} 
+\providecommand{\e}{\varepsilon} 
+\DeclareMathSymbol{\INT}{\mathop}{largesymbols}{"5A} 
+\renewcommand{\int}{\INT} 
+\renewcommand{\iint}{\mathop{\int\!\!\!\!\!\int}}
+\renewcommand{\iiint}{\mathop{\int\!\!\!\!\!\int\!\!\!\!\!\int}}
+\DeclareMathOperator{\sinc}{sinc}
+
+\theoremstyle{plain}
+%\theorembodyfont{\slshape}
+\newtheorem{definition}{Định nghĩa}[section]
+\newtheorem{proposition}{Mệnh đề}[section]
+\newtheorem{theorem}{Định lý}[section]
+\newtheorem{lemma}{Bổ đề}[section]
+\newtheorem{corollary}{Hệ quả}[section]
+\newtheorem{conjecture}{Dự đoán}[section]
+\newtheorem{remark}{Chú ý}[section]
+\newtheorem{example}{Ví dụ}
+\newtheorem{problem}{Bài toán}[section]
+\newtheorem{exercise}{Bài tập}
+
+\renewcommand{\thedefinition}{\arabic{section}.\arabic{definition}}
+\renewcommand{\thelemma}{\arabic{section}.\arabic{lemma}}
+\renewcommand{\thetable}{\Roman{table}}
+\renewcommand{\thetheorem}{\arabic{section}.\arabic{theorem}}
+\renewcommand{\thecorollary}{\arabic{section}.\arabic{corollary}}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}} 
+\renewcommand{\thefootnote}{(\arabic{footnote})}
+\renewcommand{\theexample}{\arabic{example}}
+\renewcommand{\theproblem}{\arabic{section}.\arabic{problem}}
+\renewcommand{\theexercise}{\arabic{exercise}}
+\mode<presentation>
+\setbeamertemplate{navigation symbols}{} 
+
+% --- LOGO ---
+\pgfdeclareimage[height=1cm]{fami-logo}{Logo-khoa-chup}
+%\pgfdeclareimage[height=1.5cm]{hust-logo}{logo}
+\logo{\pgfuseimage{fami-logo}}
+
+% --- THÔNG TIN TRANG BÌA CHÍNH ---
+% (Bạn hãy thay đổi các thông tin này cho phù hợp với đề tài)
+\title[Phân tích số liệu]{TÊN ĐỀ TÀI BÁO CÁO CỦA NHÓM BẠN} 
+\author[Nhóm X]{Thành viên 1 \and Thành viên 2 \and Thành viên 3} 
+\institution[SAMI-HUST]{Khoa, ĐHBK Hà Nội}
+\date{Hà Nội, tháng 11 năm 2025}
+
+\renewcommand{\sfdefault}{cmss}
+\renewcommand{\rmdefault}{cmr}
+\renewcommand{\ttdefault}{cmtt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BẮT ĐẦU NỘI DUNG BÀI BÁO CÁO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{footnotesize} % Mở môi trường chữ nhỏ (lấy từ code của bạn)
+
+% --- SLIDE TIÊU ĐỀ (TRANG BÌA) ---
+\begin{frame}
+	\frametitle{}
+	\maketitle
+\end{frame}
+
+% --- SLIDE MỤC LỤC TỔNG ---
+% (Slide này sẽ tự động hiện 5 chương của bạn)
+\begin{frame}
+	\frametitle{Nội dung chính}
+	\tableofcontents
+\end{frame}
+
+% --- TỰ ĐỘNG TẠO MỤC LỤC CHO TỪNG PHẦN ---
+% (Giữ nguyên code này của bạn)
+%\AtBeginSection[] 
+%{
+	%\begin{frame}<beamer>
+		%\frametitle{Nội dung}
+		%\tableofcontents[currentsection, currentsubsection]
+	%\end{frame}
+%}
+
+
+%\input{chuong1/chuong1.tex}
+\input{chuong2/chuong2.tex}
+\input{chuong3/chuong3.tex}
+\input{chuong4/chuong4.tex}
+\input{chuong5/chuong5.tex}
+
+
+% --- SLIDE KẾT THÚC ---
+\begin{frame}
+	\frametitle{}
+	\centering
+	\Huge
+	Cảm ơn thầy cô và các bạn\\đã lắng nghe!
+	\vfill
+	\LARGE
+	Q \& A
+\end{frame}
+
+\end{footnotesize} % Đóng môi trường chữ nhỏ
+\end{document}
