@@ -1,4 +1,479 @@
 %Chương 1 ĐANG LỖI
+%Bài của a Lực chưa đổi sang section, chỉ để frame, cần sửa lại cho phù hợp với nhóm
+\begin{frame}{7.1 Giới thiệu}
+\begin{itemize}
+  \item \textbf{Phân tích hồi quy}: phương pháp thống kê để \textbf{dự đoán} một hoặc nhiều \emph{biến phản hồi} từ tập \emph{biến dự đoán}.
+  \item Cũng dùng để \textbf{đánh giá ảnh hưởng} của các biến dự đoán lên phản hồi.
+  \item Thuật ngữ \emph{regression} bắt nguồn từ F.~Galton; tên gọi \textbf{không phản ánh hết} tầm quan trọng và phạm vi ứng dụng hiện nay.
+  \item Chương này: 
+  \begin{itemize}
+    \item Trước hết trình bày \textbf{hồi quy tuyến tính đa biến} cho \textbf{một} biến phản hồi.
+    \item Sau đó \textbf{mở rộng} sang trường hợp \textbf{nhiều} biến phản hồi.
+  \end{itemize}
+  
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Bài toán điển hình}
+\begin{itemize}
+  \item Có $r$ biến dự đoán $z_1,\ldots,z_r$ liên quan đến phản hồi $Y$.
+  \item Ví dụ (định giá nhà): \\
+  $z_1$ = diện tích (ft$^2$); \;
+  $z_2$ = vị trí (indicator); \;
+  $z_3$ = giá thẩm định năm trước; \;
+  $z_4$ = chất lượng xây dựng (giá/ft$^2$).
+  \item Ý tưởng: $Y$ gồm \textbf{trung bình} (phụ thuộc liên tục vào $z_i$) + \textbf{sai số ngẫu nhiên} {\epsilon}.
+\end{itemize}
+\end{frame}
+
+% Slide: Dạng mô hình
+\begin{frame}{Dạng mô hình}
+
+\[
+Y=\beta_0+\beta_1 z_1+\cdots+\beta_r z_r+\epsilon
+\]
+\begin{itemize}
+  \item ``Tuyến tính'' nghĩa là tuyến tính theo \textbf{tham số} $\beta_0,\ldots,\beta_r$. 
+  \item Biến dự đoán có thể là biến gốc hoặc biến đã biến đổi (ví dụ $z_2=z_1^2$).
+  \item Với $n$ quan sát độc lập $(Y_j,\; z_{1j},\ldots,z_{rj})$:
+  \[
+  Y_j=\beta_0+\beta_1 z_{1j}+ \cdots + \beta_r z_{rj}+\epsilon_j,\quad j=1,\ldots,n.
+  \]
+\end{itemize}
+\end{frame}
+
+% Slide: Giả định sai số
+\begin{frame}{Giả định sai số }
+\begin{columns}[T]
+\column{0.9\textwidth}
+\begin{enumerate}
+  \item $E(\epsilon_j)=0$.
+  \item $Var(\epsilon_j)=\sigma^2$ (phương sai không đổi).
+  \item $Cov(\epsilon_j,\epsilon_k)=0$ với $j\neq k$ (độc lập/không tương quan).
+\end{enumerate}
+
+\end{columns}
+\end{frame}
+
+% Slide: Ký hiệu ma trận & ma trận thiết kế
+\begin{frame}{Dạng ma trận và ma trận thiết kế}
+\begin{align*}
+Y_1 &= \beta_0 + \beta_1 z_{11} + \beta_2 z_{12} + \cdots + \beta_r z_{1r} + \epsilon_1 \\
+Y_2 &= \beta_0 + \beta_1 z_{21} + \beta_2 z_{22} + \cdots + \beta_r z_{2r} + \epsilon_2 \\
+&\vdots \\
+Y_n &= \beta_0 + \beta_1 z_{n1} + \beta_2 z_{n2} + \cdots + \beta_r z_{nr} + \epsilon_n
+\end{align*}
+
+\[
+
+\underbrace{\mathbf Y_{(n\times 1)}}_{\text{vector phản hồi}}
+= 
+\underbrace{\mathbf Z_{(n\times (r+1))}}_{\text{ma trận thiết kế}}
+\underbrace{\boldsymbol{\beta}_{((r+1)\times 1)}}_{\text{tham số}}
++
+\underbrace{\mathbf \epsilon_{(n\times 1)}}_{\text{sai số}}
+\]
+\begin{itemize}
+  \item Cột đầu tiên của $\mathbf Z$ là \textbf{toàn 1}: đặt biến giả $\;z_{0j}\equiv 1$ để nhân với $\beta_0$.
+  \item Mỗi \textbf{cột} của $\mathbf Z$ chứa $n$ giá trị của một predictor; mỗi \textbf{hàng} chứa predictors của một quan sát.
+\end{itemize}
+\end{frame}
+
+% Slide: Mô hình CLRM rút gọn
+\begin{frame}{Mô hình hồi quy tuyến tính tóm tắt)}
+\[
+\mathbf Y=\mathbf Z\boldsymbol{\beta}+\mathbf \epsilon,\qquad
+E(\mathbf \epsilon)=\mathbf 0,\quad Cov(\mathbf \epsilon)=\sigma^2 \mathbf I_n
+\]
+\begin{itemize}
+  \item Tham số chưa biết: $\boldsymbol{\beta}$ và $\sigma^2$.
+  \item Sẽ ước lượng bằng OLS và suy luận giả thuyết (thường thêm giả định chuẩn khi lập KTC/kiểm định).
+\end{itemize}
+\end{frame}
+
+% Slide: Ví dụ 7.1 – Hồi quy thẳng đơn
+\begin{frame}{Ví dụ: Mô hình hồi quy tuyến tính thẳng đơn}
+Dữ liệu: $z_1=\{0,1,2,3,4\},\; y=\{1,4,3,8,9\}$,\quad $E(Y)=\beta_0+\beta_1 z_1$.
+\[
+\mathbf y=\begin{bmatrix}1\\4\\3\\8\\9\end{bmatrix},\quad
+\mathbf Z=\begin{bmatrix}1&0\\1&1\\1&2\\1&3\\1&4\end{bmatrix},\quad
+\boldsymbol{\beta}=\begin{bmatrix}\beta_0\\ \beta_1\end{bmatrix}
+\]
+\[
+\mathbf y=\mathbf Z\boldsymbol{\beta}+\mathbf \epsilon
+\]
+\textit{Mở rộng phi tuyến theo biến:} thêm $z_2=z_1^2$ để mô tả quan hệ bậc hai:
+\[
+Y_j=\beta_0+\beta_1 z_{1j}+\beta_2 z_{2j}+\epsilon_j.
+\]
+\end{frame}
+
+% Slide: Ví dụ 7.2 – ANOVA một nhân tố dưới dạng hồi quy
+\begin{frame}{Ma trận thiết kế cho ANOVA như một mô hình hồi quy}
+
+    
+    \begin{exampleblock}{Bài toán}
+        Xác định ma trận thiết kế $Z$ khi áp dụng mô hình hồi quy tuyến tính cho tình huống ANOVA một yếu tố (3 nhóm).
+    \end{exampleblock}
+    
+    \pause
+    
+    \begin{block}{Phương pháp: Sử dụng Biến giả (Dummy Variables)}
+        Để xử lý các giá trị trung bình $\mu_1, \mu_2, \mu_3$ của 3 nhóm, ta tạo ra các biến giả $z_1, z_2, z_3$.
+    \end{block}
+\end{frame}
+
+% --- Slide 2: Định nghĩa Biến giả và Tham số ---
+\begin{frame}{Ma trận thiết kế cho ANOVA như một mô hình hồi quy}
+
+        \begin{block}{Thiết lập Tham số Hồi quy}
+        Đặt $\mu_i = \mu + \tau_i$. Ta có:
+        \begin{itemize}
+            \item $\beta_0 = \mu$ (Trung bình chung)
+            \item $\beta_1 = \tau_1$ (Độ lệnh trung bình nhóm 1 với tbc)
+            \item $\beta_2 = \tau_2$ (Độ lệnh trung bình nhóm 2 với tbc)
+            \item $\beta_3 = \tau_3$ (Độ lệnh trung bình nhóm 3 với tbc)
+        \end{itemize}
+    \end{block}
+   
+    
+
+    
+
+\end{frame}
+
+\begin{frame}{Ma trận thiết kế cho ANOVA như một mô hình hồi quy}
+    
+ \begin{block}{Định nghĩa Biến giả}
+        \begin{itemize}
+            \item $z_1 = \begin{cases} 1 & \text{nếu từ nhóm 1} \\ 0 & \text{khác} \end{cases}$
+            \item $z_2 = \begin{cases} 1 & \text{nếu từ nhóm 2} \\ 0 & \text{khác} \end{cases}$
+            \item $z_3 = \begin{cases} 1 & \text{nếu từ nhóm 3} \\ 0 & \text{khác} \end{cases}$
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% --- Slide 3: Mô hình, Vector Y và Ma trận Z ---
+\begin{frame}{Ma trận thiết kế cho ANOVA như một mô hình hồi quy}
+    
+    \begin{block}{Mô hình Hồi quy}
+        $Y_j = \beta_0 + \beta_1z_{j1} + \beta_2z_{j2} + \beta_3z_{j3} + \epsilon_j, \quad j=1, \dots, 8$.
+    \end{block}
+    
+    
+    \begin{columns}[T] % Căn chỉnh các cột theo top
+        \begin{column}{.4\textwidth}
+            \textbf{Vector Phản hồi Y:}
+            \[
+            Y = \begin{bmatrix} 9 \\ 6 \\ 9 \\ 0 \\ 2 \\ 3 \\ 1 \\ 2 \end{bmatrix}
+            \]
+        \end{column}
+        \begin{column}{.6\textwidth}
+            \textbf{Ma trận Thiết kế Z:}
+            \[
+            Z = \begin{bmatrix} 
+            1 & 1 & 0 & 0 \\ 
+            1 & 1 & 0 & 0 \\ 
+            1 & 1 & 0 & 0 \\ 
+            1 & 0 & 1 & 0 \\ 
+            1 & 0 & 1 & 0 \\ 
+            1 & 0 & 0 & 1 \\ 
+            1 & 0 & 0 & 1 \\ 
+            1 & 0 & 0 & 1 
+            \end{bmatrix}
+            \]
+        \end{column}
+    \end{columns}
+    
+    \vspace{1em} % Thêm khoảng trắng nhỏ
+
+
+\end{frame}
+
+\begin{frame}{Nguyên lý Bình phương Tối thiểu}
+    \begin{block}{Mục tiêu}
+        Xác định các giá trị cho hệ số hồi quy $\beta$ và phương sai sai số $\sigma^2$ sao cho mô hình "khớp" nhất với dữ liệu quan sát.
+    \end{block}
+
+    \pause
+    \begin{alertblock}{Hàm mục tiêu}
+        Chọn vector hệ số $b$ để tối thiểu hóa \textbf{tổng bình phương sai số} (Sum of Squared Errors - SSE):
+        \[
+            S(b) = \sum_{j=1}^{n} (y_j - b_0 - \dots - b_rz_{jr})^2 = (y - Zb)'(y - Zb)
+        \]
+    \end{alertblock}
+
+    \pause
+    \begin{itemize}
+        \item Nghiệm tối ưu $\hat{\beta}$ được gọi là \textbf{ước lượng bình phương tối thiểu}.
+        \item Sai lệch $\hat{\epsilon}_j = y_j - \hat{y}_j$ được gọi là \textbf{phần dư} (residual).
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}{Công thức Ước lượng}
+    \begin{block}{Ước lượng Bình phương Tối thiểu của $\beta$}
+        Nếu $Z$ có hạng đầy đủ ($r+1 \le n$), ước lượng bình phương tối thiểu của $\beta$ là:
+        \[
+            \hat{\beta} = (Z'Z)^{-1}Z'y
+        \]
+    \end{block}
+
+    \pause
+    \begin{itemize}
+        \item \textbf{Giá trị khớp (fitted values):} $\hat{y} = Z\hat{\beta} = Hy$, với $H=Z(Z'Z)^{-1}Z'$ là "ma trận mũ" (hat matrix).
+        \pause
+        \item \textbf{Vector phần dư (residuals):} $\hat{\epsilon} = y - \hat{y} = (I-H)y$.
+    \end{itemize}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}{Tính chất và Tổng bình phương phần dư}
+    \begin{block}{Tính chất Trực giao của Phần dư}
+        \begin{itemize}
+            \item Phần dư vuông góc với không gian cột của $Z$: $Z'\hat{\epsilon}=0$.
+            \item Phần dư vuông góc với các giá trị khớp: $\hat{y}'\hat{\epsilon}=0$.
+        \end{itemize}
+    \end{block}
+
+    \pause
+    \begin{alertblock}{Tổng bình phương phần dư (Residual Sum of Squares - RSS)}
+        \[
+            \hat{\epsilon}'\hat{\epsilon}
+            = \sum_{j=1}^{n} (y_j - \hat{y}_j)^2
+            = y'y - y'Z\hat{\beta}
+        \]
+    \end{alertblock}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}{Ví dụ: Hồi quy đường thẳng}
+    \begin{exampleblock}{Bài toán}
+        Dữ liệu: $y' = [1, 4, 3, 8, 9]$ và $z_1' = [0, 1, 2, 3, 4]$.
+        \begin{itemize}
+            \item Tính toán các ma trận:
+            \[
+            Z'Z = \begin{bmatrix} 5 & 10 \\ 10 & 30 \end{bmatrix}, \quad
+            Z'y = \begin{bmatrix} 25 \\ 70 \end{bmatrix}
+            \]
+            \item Ma trận nghịch đảo:
+            \[
+            (Z'Z)^{-1} = \begin{bmatrix} 0.6 & -0.2 \\ -0.2 & 0.1 \end{bmatrix}
+            \]
+        \end{itemize}
+        \pause
+        \[
+            \hat{\beta} = (Z'Z)^{-1}Z'y =
+            \begin{bmatrix} 1 \\ 2 \end{bmatrix}
+        \]
+        \textbf{Phương trình khớp:} $\hat{y} = 1 + 2z_1$
+    \end{exampleblock}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}{Tính các giá trị khớp và phần dư}
+    \begin{exampleblock}{Tính toán}
+        \textbf{Phương trình khớp:} $\hat{y} = 1 + 2z_1$
+        \pause
+        \begin{itemize}
+            \item \textbf{Giá trị khớp:} $\hat{y} = [1, 3, 5, 7, 9]'$
+            \pause
+            \item \textbf{Phần dư:} $\hat{\epsilon} = [0, 1, -2, 1, 0]'$
+            \pause
+            \item \textbf{Tổng bình phương phần dư:}
+            \[
+            \hat{\epsilon}'\hat{\epsilon} = 0^2 + 1^2 + (-2)^2 + 1^2 + 0^2 = 6
+            \]
+        \end{itemize}
+    \end{exampleblock}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+    \frametitle{Phân rã Tổng bình phương (Sum of Squares Decomposition)}
+
+    Từ tính chất $\hat{y}'\hat{\epsilon} = 0$, ta có:
+    \[ y'y = (\hat{y} + \hat{\epsilon})'(\hat{y} + \hat{\epsilon}) = \hat{y}'\hat{y} + \hat{\epsilon}'\hat{\epsilon} \]
+
+    \pause
+
+    Trừ $n\bar{y}^2$ khỏi cả hai vế (lưu ý $\bar{y} = \bar{\hat{y}}$), ta được phân rã quanh giá trị trung bình:
+    \begin{equation*}
+        \underbrace{\sum_{j=1}^{n} (y_j - \bar{y})^2}_{\text{TSS (Total)}} = \underbrace{\sum_{j=1}^{n} (\hat{y}_j - \bar{y})^2}_{\text{SSR (Regression)}} + \underbrace{\sum_{j=1}^{n} \hat{\epsilon}_j^2}_{\text{SSE (Error/Residual)}}
+    \end{equation*}
+
+    \pause
+
+    \begin{center}
+        (Tổng bình phương toàn phần) = (Tổng bình phương hồi quy) + (Tổng bình phương phần dư)
+    \end{center}
+
+\end{frame}
+
+% --- Slide 2: Hệ số xác định R^2 ---
+\begin{frame}
+    \frametitle{Hệ số xác định ($R^2$)}
+
+    \begin{block}{Định nghĩa}
+        Chất lượng khớp của mô hình có thể được đo bằng hệ số xác định ($R^2$):
+        \begin{equation*}
+            R^2 =  \frac{\sum_{j=1}^{n} (\hat{y}_j - \bar{y})^2}{\sum_{j=1}^{n} (y_j - \bar{y})^2} = 1 - \frac{\sum_{j=1}^{n} \hat{\epsilon}_j^2}{\sum_{j=1}^{n} (y_j - \bar{y})^2}
+        \end{equation*}
+    \end{block}
+
+    \pause
+
+    \begin{block}{Ý nghĩa}
+        $R^2$ cho biết \textbf{tỷ lệ phần trăm} của tổng biến thiên trong biến phản hồi $Y$ được \textbf{giải thích bởi} các biến dự báo $z_1, \dots, z_r$ trong mô hình.
+    \end{block}
+
+    \pause
+
+    \begin{itemize}
+        \item $0 \le R^2 \le 1$.
+        \item $R^2 = 1$: Mô hình khớp hoàn hảo ($\hat{\epsilon}_j = 0$ với mọi $j$).
+        \item $R^2 = 0$: Mô hình không giải thích được gì ($\hat{\beta}_1 = \dots = \hat{\beta}_r = 0$).
+        \item Đôi khi người ta dùng hệ số tương quan bội $R = +\sqrt{R^2}$.
+    \end{itemize}
+
+\end{frame}
+
+%-------------------------------------------------
+
+\begin{frame}{Tiếp cận theo phương pháp hình học}
+    Một diễn giải hình học làm nổi bật bản chất của kỹ thuật bình phương tối thiểu.
+    \begin{itemize}
+        \item Vectơ phản hồi trung bình $E(\mathbf{Y})$ là một tổ hợp tuyến tính của các cột của $\mathbf{Z}$:
+        \[
+        E(\mathbf{Y}) = \mathbf{Z}\beta = \beta_0 \begin{bmatrix} 1 \\ \vdots \\ 1 \end{bmatrix} + \beta_1 \begin{bmatrix} z_{11} \\ \vdots \\ z_{n1} \end{bmatrix} + \dots + \beta_r \begin{bmatrix} z_{1r} \\ \vdots \\ z_{nr} \end{bmatrix}
+        \]
+        \item Khi $\beta$ thay đổi, $\mathbf{Z}\beta$ tạo ra \textbf{mặt phẳng mô hình} (model plane).
+        \item Thông thường, vectơ quan sát $\mathbf{y}$ sẽ \textit{không} nằm trong mặt phẳng mô hình do có sai số ngẫu nhiên $\epsilon$.
+        \[
+        \underset{(\text{vectơ phản hồi})}{\mathbf{Y}} = \underset{(\text{vectơ trong MP mô hình})}{\mathbf{Z}\beta} + \underset{(\text{vectơ sai số})}{\epsilon}
+        \]
+        
+    \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Ý nghĩa hình học: Phép chiếu}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            Mục tiêu là tối thiểu hóa tổng bình phương $S(\mathbf{b}) = (\mathbf{y} - \mathbf{Z}\mathbf{b})'(\mathbf{y} - \mathbf{Z}\mathbf{b})$.
+            \begin{itemize}
+                \item $S(\mathbf{b})$ đạt giá trị nhỏ nhất khi $\mathbf{Z}\mathbf{b}$ là điểm trong mặt phẳng mô hình \textbf{gần $\mathbf{y}$ nhất}.
+                \item Điểm này chính là \textbf{phép chiếu vuông góc} (perpendicular projection) của $\mathbf{y}$ lên mặt phẳng mô hình.
+                \item Giá trị phù hợp (fitted value) $\hat{\mathbf{y}} = \mathbf{Z}\hat{\beta}$ chính là phép chiếu này.
+                \item Vectơ phần dư $\hat{\epsilon} = \mathbf{y} - \hat{\mathbf{y}}$ là vectơ \textbf{vuông góc} với mặt phẳng mô hình.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{figure}
+                \includegraphics[width=\textwidth]{image.png} 
+                \caption{Bình phương tối thiểu n=3 r=1 }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ---
+\begin{frame}{Ma trận chiếu}
+    Khi $\mathbf{Z}$ có hạng đầy đủ, phép chiếu được biểu thị bằng phép nhân với một ma trận:
+    \[
+    \hat{\mathbf{y}} = \mathbf{Z}(\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{Z}'\mathbf{y} = \mathbf{H}\mathbf{y}
+    \]
+    Ma trận $\mathbf{H} = \mathbf{Z}(\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{Z}'$ được gọi là "ma trận hat" (hat matrix).
+
+    \vspace{0.5em}
+    \pause
+    \textbf{Giải thích (Tóm tắt):}
+    \begin{itemize}
+        \item Xây dựng một cơ sở trực chuẩn $\{\mathbf{q}_i\}$ cho không gian cột của $\mathbf{Z}$.
+        \item Ma trận chiếu về mặt lý thuyết là $\sum \mathbf{q}_i \mathbf{q}_i'$.
+        \item Có thể chứng minh bằng phân rã phổ (spectral decomposition) rằng:
+        \[
+        \mathbf{H} = \mathbf{Z}(\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{Z}' = \sum_{i=1}^{r+1} \mathbf{q}_i \mathbf{q}_i'
+        \]
+        
+        \item Do đó, $\mathbf{H}\mathbf{y} = (\sum \mathbf{q}_i \mathbf{q}_i')\mathbf{y} = \mathbf{Z}\hat{\beta} = \hat{\mathbf{y}}$, xác nhận $\mathbf{H}$ là ma trận chiếu.
+        \item Tương tự, ma trận chiếu phần dư là $(\mathbf{I} - \mathbf{H})$.
+    \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Các tính chất lấy mẫu của các OLS}
+    Mô hình hồi quy tuyến tính tổng quát:
+    \begin{itemize}
+        \item \textbf{Ước lượng $\hat{\beta}$:}
+        \begin{itemize}
+            \item Không chệch (Unbiased): $E(\hat{\beta}) = \beta$.
+            \item Hiệp phương sai: $\text{Cov}(\hat{\beta}) = \sigma^2(\mathbf{Z}'\mathbf{Z})^{-1}$.
+        \end{itemize}
+        \bigskip
+        \item \textbf{Phần dư $\hat{\epsilon}$:}
+        \begin{itemize}
+            \item $E(\hat{\epsilon}) = \mathbf{0}$.
+            \item Hiệp phương sai: $\text{Cov}(\hat{\epsilon}) = \sigma^2[\mathbf{I} - \mathbf{H}]$.
+        \end{itemize}
+        \bigskip
+        \item \textbf{Ước lượng Phương sai $\sigma^2$:}
+        \begin{itemize}
+            \item $E(\hat{\epsilon}'\hat{\epsilon}) = (n-r-1)\sigma^2$.
+            \item Ước lượng không chệch cho $\sigma^2$ là:
+            \[
+            s^2 = \frac{\hat{\epsilon}'\hat{\epsilon}}{n-r-1} \quad \text{với} \quad E(s^2) = \sigma^2
+            \]
+            
+        \end{itemize}
+        \bigskip
+        \item $\hat{\beta}$ và $\hat{\epsilon}$ là \textbf{không tương quan} (uncorrelated).
+    \end{itemize}
+\end{frame}
+
+% ---
+\begin{frame}{Định lý Bình phương Tối thiểu của Gauss }
+    \textbf{Bối cảnh:}
+    Ước lượng một hàm tuyến tính của các tham số, ví dụ: $c'\beta = c_0\beta_0 + \dots + c_r\beta_r$.
+
+    \bigskip
+    \textbf{Giả định (Gauss):}
+    \begin{itemize}
+        \item $\mathbf{Y} = \mathbf{Z}\beta + \epsilon$
+        \item $E(\epsilon) = \mathbf{0}$
+        \item $\text{Cov}(\epsilon) = \sigma^2\mathbf{I}$ (Các sai số không tương quan và có cùng phương sai)
+        \item $\mathbf{Z}$ có hạng đầy đủ $r+1$
+    \end{itemize}
+    
+    \bigskip
+    \textbf{Định lý (Định lý Gauss-Markov):}
+    \begin{itemize}
+        \item Với mọi $\mathbf{c}$, ước lượng OLS $c'\hat{\beta}$ có \textbf{phương sai nhỏ nhất có thể} trong số tất cả các ước lượng tuyến tính (dạng $\mathbf{a}'\mathbf{Y}$) và \textbf{không chệch} (unbiased) của $c'\beta$.
+    \end{itemize}
+    \bigskip
+    $\implies$ $c'\hat{\beta}$ được gọi là \textbf{Ước lượng Không chệch Tuyến tính Tốt nhất (BLUE)}.
+\end{frame}
+
+% ---
+\begin{frame}{Tóm tắt Chứng minh Định lý Gauss-Markov}
+    Mục tiêu: Chứng minh $\text{Var}(c'\hat{\beta}) \le \text{Var}(\mathbf{a}'\mathbf{Y})$ với mọi $\mathbf{a}'\mathbf{Y}$ là ước lượng tuyến tính, không chệch.
+    \begin{enumerate}
+        \item Đặt $\mathbf{a}'\mathbf{Y}$ là một ước lượng tuyến tính, không chệch bất kỳ.
+        \item Điều kiện không chệch ($E(\mathbf{a}'\mathbf{Y}) = c'\beta$) đòi hỏi: $\mathbf{c}' = \mathbf{a}'\mathbf{Z}$.
+        \item Ước lượng OLS $c'\hat{\beta}$ cũng là ước lượng tuyến tính: $\mathbf{a}^{*\prime}\mathbf{Y}$, với $\mathbf{a}^* = \mathbf{Z}(\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{c}$.
+        \item Phương sai của $\mathbf{a}'\mathbf{Y}$ là $\text{Var}(\mathbf{a}'\mathbf{Y}) = \sigma^2(\mathbf{a}'\mathbf{a})$.
+        \item Ta có thể phân rã phương sai:
+        \[
+        \text{Var}(\mathbf{a}'\mathbf{Y}) = \sigma^2 \mathbf{a}'\mathbf{a} = \sigma^2 [ (\mathbf{a}-\mathbf{a}^*)'(\mathbf{a}-\mathbf{a}^*) + \mathbf{a}^{*\prime}\mathbf{a}^* ]
+        \]
+        
+        \item Số hạng chéo bằng 0, vì:
+        $(\mathbf{a}-\mathbf{a}^*)'\mathbf{a}^* = (\mathbf{a}-\mathbf{a}^*)'\mathbf{Z}(\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{c} = (\mathbf{c}' - \mathbf{c}')(\dots) = 0$.
+        \item Do đó, $\text{Var}(\mathbf{a}'\mathbf{Y}) = \text{Var}(\mathbf{a}^*\mathbf{Y}) + \sigma^2(\mathbf{a}-\mathbf{a}^*)'(\mathbf{a}-\mathbf{a}^*)$.
+        \item Vì $\sigma^2(\mathbf{a}-\mathbf{a}^*)'(\mathbf{a}-\mathbf{a}^*) \ge 0$, phương sai được tối thiểu hóa khi $\mathbf{a} = \mathbf{a}^*$ (tức là khi sử dụng ước lượng OLS).
+    \end{enumerate}
+\end{frame}
+
 \section{Ước lượng Khoảng của Mô hình Hồi quy Tuyến tính}
 
 %-------------------------------------------------------------------------------

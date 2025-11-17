@@ -1,8 +1,25 @@
+\begin{footnotesize}
+\begin{frame}
+	\frametitle{}
+	\maketitle
+%	\begin{block}
+%	\titlepage
+%	\end{block}
+\end{frame}
+
+\AtBeginSection[] % Do nothing for \section*
+{
+	\begin{frame}<beamer>
+		\frametitle{Nội dung}
+		\tableofcontents[currentsection, currentsubsection]
+	\end{frame}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Một số khái niệm}
 \subsection{Chuẩn hóa tập mẫu}
 \begin{frame}
 \frametitle{Chuẩn hóa tập mẫu}
-    \begin{itemize}
+	\begin{itemize}
     \item Chuẩn hóa là một phương pháp tiền xử lý thiết yếu, đặc biệt là trong trường hợp các biến quan sát được đo lường bằng những đơn vị hoặc những thang đo khác nhau (VD: mét, kilogram hay đơn vị tiền tệ). 
     \item Sự khác biệt lớn giữa phạm vi các khoảng giá trị của các biến độc lập có thể tạo ra sự sai lệch trong phân tích để đưa ra một mô hình chính xác. 
     \item VD: Giả sử $z_1$ là biến dự đoán thể hiện chiều cao của một người, vậy thì $z_1 \in [0;2]$ với đơn vị mét. Giả sử $z_2$ là biến dự đoán thể hiện mức chi tiêu của một người (tính theo VNĐ), ta có thể có $z_2 \in [0;10 000 000 000]$. Trong trường hợp hai biến "chiều cao" và "chi tiêu" như trên, "chi tiêu" sẽ có tác động lớn hơn đối với đầu ra (biến phản hồi), nhưng như vậy ta không khẳng định được rằng biến đó có ý nghĩa quan trọng hơn về mặt thống kê. 
@@ -11,8 +28,8 @@
 %%=====================================
 \begin{frame}
 \frametitle{Chuẩn hóa tập mẫu}
-    \begin{itemize}
-    \item Để chuẩn hóa dữ liệu, ta đặt:
+	\begin{itemize}
+	\item Để chuẩn hóa dữ liệu, ta đặt:
    \[
    z^* = \dfrac{z- \mu}{s}
    \]
@@ -28,29 +45,31 @@
        \item Tăng độ chính xác và ổn định của mô hình thống kê, tránh việc biến có giá trị lớn chi phối kết quả.
        \item Khi áp dụng công thức này với toàn bộ dữ liệu $Z$, ta sẽ nhận được mẫu $Z^*$ mới có $\mu = 0$ và $s=1$.
    \end{itemize}
-    \end{itemize}
+	\end{itemize}
 \end{frame}
 %%=====================================
 \subsection{Outlier}
 \begin{frame}
 \frametitle{Outlier}
-    \begin{block}{Định nghĩa}
+	\begin{block}{Định nghĩa}
     \textbf{Outlier} là điểm dữ liệu bất thường, nghĩa là quan sát tại điểm đó khác biệt so với phần còn lại của bộ dữ liệu mà ta thu thập được. 
     \end{block}
     \begin{figure}
         \centering
         \includegraphics[width=0.55\linewidth]{images/Hình minh họa cho Outlier.png}
         \caption{Hình minh họa cho Outlier}
+        \label{fig:placeholder}
     \end{figure}
 \end{frame}
 %%=====================================
 \begin{frame}
 \frametitle{Sự tác động của Outlier đến mô hình hồi quy}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.6\linewidth]{images/Sự tác động của Outlier đến mô hình.png}
-        \caption{Sự tác động của Outlier đến mô hình}
-    \end{figure}
+	\begin{figure}
+	    \centering
+	    \includegraphics[width=0.6\linewidth]{images/Sự tác động của Outlier đến mô hình.png}
+	    \caption{Sự tác động của Outlier đến mô hình}
+	    \label{fig:placeholder}
+	\end{figure}
     \begin{itemize}
         \item Đường nét liền thể hiện mô hình hồi quy tuyến tính khi giữ lại Outlier.
         \item Đường nét đứt thể hiện mô hình hồi quy tuyến tính khi đã loại bỏ Outlier.
@@ -59,7 +78,7 @@
 \subsection{Độ đo Leverage}
 \begin{frame}
 \frametitle{Độ đo Leverage}
-    \begin{itemize}
+	\begin{itemize}
     \begin{block}{Định nghĩa}
     \textbf{Leverage} là độ đo khoảng cách giữa một điểm dữ liệu và phần còn lại của bộ dữ liệu dựa trên miền giá trị của bộ dữ liệu, được xác định bởi công thức:
     $$ h_{k j}=\frac{1}{n}+\frac{\left(z_{kj}-\overline{z}\right)^{2}}{\sum_{j=1}^{n}\left(z_{kj}-\overline{z}\right)^{2}}$$
@@ -163,11 +182,11 @@ Trong bộ dữ liệu ở ví dụ 6.1, quan sát thứ 12 ($Y=9.2$, $z_1 = 2.0
 %%=====================================
 \begin{frame}
 \frametitle{Ví dụ}
-        Một hệ thống ghi lại tốc độ (đơn vị: km/h) của 25 xe qua trạm như sau: 
+	    Một hệ thống ghi lại tốc độ (đơn vị: km/h) của 25 xe qua trạm như sau: 
         \begin{center}
             \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-    \hline 
-    20 & 41 & 41 & 80 & 40 & 52 & 52 & 52 & 60 & 55 & 60 & 60 & 62 \\ \hline
+	\hline 
+	20 & 41 & 41 & 80 & 40 & 52 & 52 & 52 & 60 & 55 & 60 & 60 & 62 \\ \hline
 60 & 55 & 60 & 55 & 92 & 70 & 35 & 40 & 30 & 30 & 80 & 25 &  \\ \hline
 \end{tabular}
         \end{center}
@@ -177,7 +196,7 @@ Trong bộ dữ liệu ở ví dụ 6.1, quan sát thứ 12 ($Y=9.2$, $z_1 = 2.0
 \begin{frame}
 \frametitle{Ví dụ}
 \begin{itemize}
-    \item Sắp xếp dữ liệu theo thứ tự tăng dần: 20, 25, 30, 30, 35, 40, 40, 41, 41, 52, 52, 52, 55, 55,  60, 60, 60, 60, 60, 62, 70, 80, 80, 92.
+	\item Sắp xếp dữ liệu theo thứ tự tăng dần: 20, 25, 30, 30, 35, 40, 40, 41, 41, 52, 52, 52, 55, 55,  60, 60, 60, 60, 60, 62, 70, 80, 80, 92.
     \item $Q_1$ là trung bình cộng giá trị thứ 6 và 7 nên $Q_1 = \dfrac{40 + 40}{2} = 40$.
     \item $Q_3$ là trung bình cộng giá trị thứ 19 và 20 nên $Q_3 = \dfrac{60 + 60}{2} = 60$.
     \item $IQR = Q_3 - Q_1 = 60 - 40 = 20$.
@@ -255,7 +274,7 @@ Trong đó: CDF là hàm phân phối xác suất của phân phối Student.
 
 Tính toán đại lượng $F - score$:
 \begin{equation*}
-    F = \dfrac{(n-k-1)R^2}{k(1-R^2)}
+	F = \dfrac{(n-k-1)R^2}{k(1-R^2)}
 \end{equation*}
 
 Trong đó:
@@ -289,10 +308,10 @@ R^{2} :=
  tra ngẫu nhiên doanh thu của 12 công ty trong 12 thời kỳ, kết quả ta có bảng sau:
      {\scriptsize\begin{center}
             \begin{tabular}{|c|c|c|c|}
-    \hline 
-    STT & Y (Doanh thu) & $Z_1$ (Chi phí sản xuất) & $Z_2$ (Chi phí tiếp thị) \\
-    \hline 
-    1& 127 & 18 & 10 \\
+	\hline 
+	STT & Y (Doanh thu) & $Z_1$ (Chi phí sản xuất) & $Z_2$ (Chi phí tiếp thị) \\
+	\hline 
+	1& 127 & 18 & 10 \\
       2&  149 & 25 & 11 \\
         3&106 & 19 &6\\
         4&163 & 24 &16\\
@@ -304,9 +323,9 @@ R^{2} :=
         10&144 &23 &12\\
         11&159 &22 &14\\
         12&138 &15 &15\\
-    \hline
+	\hline
         
-       \end{tabular}
+	   \end{tabular}
         \end{center}}
         Ta đi sẽ kiểm tra xem mô hình có phụ thuộc vào biến hay không với $\alpha = 0,05$.
 \end{frame}
@@ -418,19 +437,26 @@ Sự đa cộng tuyến giữa các biến dự đoán ám chỉ trường hợp
 \frametitle{Cách khắc phục hiện tượng đa cộng tuyến}
 \begin{enumerate}
     \item Tính các hệ số tương quan mẫu $r_{ij}$.
-    \item Đặt $r_{0i}$ là hệ số tương quan tuyến tính mẫu giữa $Y$ và $Z_i$, cụ thể là:
-    $$r_{0i} = s_{0i}/\sqrt{s_{ii}s_{00}}$$
-    Trong đó:
+	\item Đặt $r_{0i}$ là hệ số tương quan tuyến tính mẫu giữa $Y$ và $Z_i$, cụ thể là:
+	$$r_{0i} = s_{0i}/\sqrt{s_{ii}s_{00}}$$
+	Trong đó:
     \begin{itemize}
     \item $s_{00} = \dfrac{1}{n-1}\sum\limits_{j=1}^n{(y_j - \overline{y}) \times( y_j-\overline{y}) }$ ; \item $s_{0i} = \dfrac{1}{n-1}\sum\limits_{j=1}^n{(y_j - \overline{y}) \times( z_{ji}-\overline{z_i}) }$ \end{itemize}
-    Khi đó, nếu thấy $|r_{ij}| \geq 0,7$ thì:
-    \begin{itemize}
-        \item Ta loại biến $Z_i$ ra khỏi mô hình nếu $|r_{0i}| < |r_{0j}|$.
-        \item Ta loại biến $Z_j$ ra khỏi mô hình nếu $|r_{0i}| > |r_{0j}|$.
-    \end{itemize} 
-    \item Thực hiện hồi quy sau khi ma trận $Z$ đã loại bỏ biến $Z_i$ hay $Z_j$.
+	Khi đó, nếu thấy $|r_{ij}| \geq 0,7$ thì:
+	\begin{itemize}
+	    \item Ta loại biến $Z_i$ ra khỏi mô hình nếu $|r_{0i}| < |r_{0j}|$.
+	    \item Ta loại biến $Z_j$ ra khỏi mô hình nếu $|r_{0i}| > |r_{0j}|$.
+	\end{itemize} 
+	\item Thực hiện hồi quy sau khi ma trận $Z$ đã loại bỏ biến $Z_i$ hay $Z_j$.
 \end{enumerate}
 \end{frame}
+%%=====================================
+\begin{frame}
+\frametitle{Ví dụ}
+    
+\end{frame}
+\end{footnotesize}
+
 
 %%=============================================================
 %%=============================================================
@@ -480,12 +506,11 @@ Sự đa cộng tuyến giữa các biến dự đoán ám chỉ trường hợp
         \]
         
         \begin{itemize}
-            \item $h_{ii}$ là \textbf{leverage} (độ đòn bẩy) của quan sát thứ $i$
+            \item $h_{ii}$ là \textbf{leverage} (độ đòn bẩy) của quan sát thứ $i$\footnotemark
             \item Các quan sát có $h_{ii}$ khác nhau $\Rightarrow$ Phương sai khác nhau
             \item Không thể so sánh trực tiếp để phát hiện outlier
         \end{itemize}
     \end{block}
-    \note{Phần này bạn có thể giải thích thêm về h_ii đã được định nghĩa ở mục Leverage}
 \end{frame}
 
 \begin{frame}
@@ -629,7 +654,6 @@ Sự đa cộng tuyến giữa các biến dự đoán ám chỉ trường hợp
         \item $4 - dU \le DW \le 4 - dL$: Không thể kết luận.
         \item $4 - dL < DW < 4$: Kết luận có tự tương quan âm.
     \end{itemize}
-    \note{Bạn có thể thêm hình ảnh minh họa 5 vùng của Durbin-Watson ở đây}
 \end{frame}
 
 \begin{frame}
@@ -671,7 +695,7 @@ Sự đa cộng tuyến giữa các biến dự đoán ám chỉ trường hợp
         \item \textbf{Chi phí thu thập dữ liệu:} Thực tế không cần thiết
     \end{itemize}
     \textbf{Mục tiêu:} Tìm tập con biến nhỏ nhất nhưng vẫn giải thích tốt biến phụ thuộc.
-    
+        
     \textit{"As simple as possible, but not simpler"} - Einstein
 \end{frame}
 
