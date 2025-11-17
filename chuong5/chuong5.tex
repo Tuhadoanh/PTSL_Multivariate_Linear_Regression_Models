@@ -1,12 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ĐÂY LÀ NỘI DUNG CHO FILE chuong5/chuong5.tex
-% Đã gộp 'phan1_chuong5.tex' và 'phan2_chuong5.tex'
-% Đã XÓA SẠCH các thẻ gây lỗi.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%============================================================
-% NỘI DUNG TỪ PHAN1_CHUONG5.TEX
-%============================================================
 \section{Sơ lược về cách tiếp cận mới}
 %============================================================
 
@@ -16,19 +7,19 @@
          Trong mục này, ta xét môt cách tiếp cận khác.
          Ta coi biến Y, Z$_1, \ldots$, Z$_r$ là các biến ngẫu nhiên có hàm phân phối đồng thời không nhất thiết là phân phối chuẩn, có kỳ vọng và phương sai là
 
-     \begin{footnotesize}
-        \[
-        \boldsymbol{\mu} = \begin{bmatrix} \mu_y \\ _\text{- - - - -} \\ \boldsymbol{\mu_Z} \\_{r \times 1}\end{bmatrix}
-        \quad
-        \text{và} \quad \boldsymbol{S}=\left[\begin{array}{c:c}
-        \sigma_{Y Y} & \underset{1 \times r}{\boldsymbol{\sigma}_{\mathbf{Z Y}}^{\prime}} \\
-        \hdashline \underset{r \times 1}{\boldsymbol{\sigma}_{\mathbf{Z Y}}} & \underset{r \times r}{\boldsymbol{\Sigma}_{\mathbf{Z Z}}} 
-        \end{array}\right] \]
-    trong đó:
-        \[
-        \boldsymbol{\sigma_{ZY}} = [\sigma_{Z_1 Y}, \sigma_{Z_2 Y}, \dots ,  \sigma_{Z_r Y}]'
-        \]
-    \end{footnotesize}
+        \begin{footnotesize}
+            \[
+            \boldsymbol{\mu} = \begin{bmatrix} \mu_y \\ _\text{- - - - -} \\ \boldsymbol{\mu_Z} \\_{r \times 1}\end{bmatrix}
+            \quad
+            \text{và} \quad \boldsymbol{S}=\left[\begin{array}{c:c}
+            \sigma_{Y Y} & \underset{1 \times r}{\boldsymbol{\sigma}_{\mathbf{Z Y}}^{\prime}} \\
+            \hdashline \underset{r \times 1}{\boldsymbol{\sigma}_{\mathbf{Z Y}}} & \underset{r \times r}{\boldsymbol{\Sigma}_{\mathbf{Z Z}}} 
+            \end{array}\right] \]
+        trong đó:
+            \[
+            \boldsymbol{\sigma_{ZY}} = [\sigma_{Z_1 Y}, \sigma_{Z_2 Y}, \dots ,  \sigma_{Z_r Y}]'
+            \]
+        \end{footnotesize}
 
         và ma trận $\boldsymbol{\Sigma_{ZZ}}$ đầy hạng.
         Trong trường hợp ma trận $\boldsymbol{\Sigma_{ZZ}}$ không đầy hạng, khi đó sẽ có một biến Z$_i$ là tổ hợp tuyến tính của các biến Z$_j$ (j $\neq$ i) còn lại .
